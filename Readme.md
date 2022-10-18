@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Ivan Merkulov](https://up.htmlacademy.ru/react/11/user/2109415).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Гуляев](https://htmlacademy.ru/profile/dima).
 
 ---
 
