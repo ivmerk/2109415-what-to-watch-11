@@ -1,4 +1,10 @@
-function PlayerScreen():JSX.Element{
+import { MovieCard } from '../../types/moviescards';
+
+type PlayerScreenProps = {
+  filmTop: MovieCard;
+}
+
+function PlayerScreen({filmTop}:PlayerScreenProps):JSX.Element{
   return(
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
@@ -21,7 +27,7 @@ function PlayerScreen():JSX.Element{
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{filmTop.filmInfo.title}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

@@ -1,33 +1,10 @@
+import { MovieCard } from '../types/moviescards';
 import { getRandomFloat, getRandomInteger, getRandomValue } from '../utils/utils';
 import { GENRECOUNT, GENRES, NAME_COUNT, ACTORS, DIRECTORS, FILM_COUNT, POSTERS, RATING, RELEASEDATE, TITLES, VOICESCOUNT, DESCRIPTION, FILMSRC } from './const';
 
-type filmInfo = {
-  poster:string;
-  picture:string;
-  title:string;
-  ganre:string[];
-  releaseDate:number;
-  src: string;
-};
-type overviewAndDetails = {
-  description: string;
-  rating: number;
-  ratingDecription: string;
-  voiceCount: number;
-  director:string;
-  actors:string[];
-  continuance:number;
-};
-
-type movieCard = {
-  id: number;
-  filmInfo: filmInfo;
-  overviewAndDetails: overviewAndDetails;
-}
-
 
 const generateMovieCard = () => {
-  const card:movieCard = {
+  const card:MovieCard = {
     id: 0,
     filmInfo: {
       poster: getRandomValue(POSTERS),
@@ -52,7 +29,7 @@ const generateMovieCard = () => {
 };
 
 export const generateMoviesList = () => {
-  const cards = Array.from({length: FILM_COUNT}, generateMovieCard);
+  const cards:MovieCard[] = Array.from({length: FILM_COUNT}, generateMovieCard);
   cards.map((item, index) => (item.id = index));
   return cards;
 };

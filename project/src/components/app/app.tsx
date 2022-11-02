@@ -5,17 +5,27 @@ import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import FilmScreen from '../../pages/film-screen/film-screen';
-import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
+import { MovieCard } from '../../types/moviescards';
+import AddReview from '../add-review/add-review';
+
+type AppScreenProps = {
+  films: MovieCard[];
+  filmTop: MovieCard;
+
+};
 
 
-function App(props: { nameOfFilm: string; ganre: string; releaseDate: number}): JSX.Element {
+function App({films, filmTop}:AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Main} element={
-          <MainScreen nameOfFilm={props.nameOfFilm} ganre={props.ganre} releaseDate={props.releaseDate} />
+          <MainScreen
+            filmTop = {filmTop}
+            films = {films}
+          />
         }
         />
         <Route path={AppRoute.Login} element={<SignInScreen/>} />
@@ -25,13 +35,34 @@ function App(props: { nameOfFilm: string; ganre: string; releaseDate: number}): 
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.NoAuth}
             >
-              <MyListScreen/>
+              <MyListScreen
+                filmTop = {filmTop}
+                films = {films}
+              />
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Player} element={<PlayerScreen/>} />
-        <Route path={AppRoute.Film} element={<FilmScreen/>} />
-        <Route path={AppRoute.AddReview} element={<AddReviewScreen/>} />
+        <Route path={AppRoute.Player}
+          element={
+            <PlayerScreen
+              filmTop = {filmTop}
+            />
+          }
+        />
+        <Route path={AppRoute.Film}
+          element={
+            <FilmScreen
+              filmTop = {filmTop}
+            />
+          }
+        />
+        <Route path={AppRoute.AddReview}
+          element={
+            <AddReview
+              filmTop = {filmTop}
+            />
+          }
+        />
         <Route path='*' element={<NotFoundPage/>} />
       </Routes>
     </BrowserRouter>
