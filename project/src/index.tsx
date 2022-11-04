@@ -1,24 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import { generateMoviesList } from './mocks/films';
+// import { generateReviewList } from './mocks/reviews';
+import { MovieCard } from './types/moviescards';
 
-type Film = {
-  nameOfFilm: string;
-  ganre: string;
-  releaseDate: number;
-};
 
-const filmTop: Film = {
-  nameOfFilm: 'Name',
-  ganre: 'Drame',
-  releaseDate: 2001,
-};
+let films:MovieCard[] = [];
+films = generateMoviesList();
+
+const filmTop:MovieCard = generateMoviesList()[0];
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
 root.render(
   <React.StrictMode>
-    <App nameOfFilm={filmTop.nameOfFilm} ganre={filmTop.ganre} releaseDate={filmTop.releaseDate}/>
+    <App
+      films = {films}
+      filmTop = {filmTop}
+    />
   </React.StrictMode>,
 );
