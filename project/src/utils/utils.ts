@@ -43,10 +43,17 @@ const getRandomValue = (items:string[]) => items[getRandomInteger(0, items.lengt
 //     return -1;
 //   }
 // };
-
+function getArray(count:number):number[] {
+  const result :number[] = [1];
+  while (result.length < count) {
+    result.unshift(result.length + 1);
+  }
+  return result;
+}
 
 export {
   getRandomInteger,
   getRandomValue,
   getRandomFloat,
+  getArray,
 };

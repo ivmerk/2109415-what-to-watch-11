@@ -8,7 +8,7 @@ import FilmScreen from '../../pages/film-screen/film-screen';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { MovieCard } from '../../types/moviescards';
-import AddReview from '../add-review/add-review';
+import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 
 type AppScreenProps = {
   films: MovieCard[];
@@ -58,7 +58,7 @@ function App({films, filmTop}:AppScreenProps): JSX.Element {
         />
         <Route path={AppRoute.AddReview}
           element={
-            <AddReview
+            <AddReviewScreen
               filmTop = {filmTop}
             />
           }
