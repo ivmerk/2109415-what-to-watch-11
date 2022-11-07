@@ -35,7 +35,7 @@ function FilmCard(props: FilmCardProps): JSX.Element {
           onMouseOut={onMouseOutHandle}
         >
           {isActiveCard
-            ? <VideoPlayer autoPlay src={filmInfo.src} />
+            ? <VideoPlayer autoPlay muted film={film} />
             :
             <
               img
