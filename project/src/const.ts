@@ -15,3 +15,11 @@ export enum AuthorizationStatus {
 }
 
 
+export enum FilmGenre {
+  AllGanres = 'ALL',
+  Comedy = 'COMEDY',
+  Triller = 'TRILLER',
+  Drama = 'Drama',
+}
+
+export const FILMGENREBYDEFAULT = 'All genres';
