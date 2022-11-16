@@ -9,6 +9,7 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { MovieCard } from '../../types/moviescards';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
+import { useAppSelector } from '../../hooks';
 
 type AppScreenProps = {
   films: MovieCard[];
@@ -16,8 +17,9 @@ type AppScreenProps = {
 
 };
 
-
 function App({films, filmTop}:AppScreenProps): JSX.Element {
+  const isFilmsLoaded = useAppSelector((state) => state.isFilmsLoaded);
+  console.log(isFilmsLoaded);
   return (
     <BrowserRouter>
       <Routes>
