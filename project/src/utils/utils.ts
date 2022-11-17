@@ -1,5 +1,8 @@
 // import dayjs from 'dayjs';
 
+import { FILMGENREBYDEFAULT } from '../const';
+import { MovieCard } from '../types/moviescards';
+
 //dayjs.extend(duration);
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
@@ -51,9 +54,16 @@ function getArray(count:number):number[] {
   return result;
 }
 
+function filterFilms(films :MovieCard[], newGenre :string):MovieCard[] {
+  return (newGenre !== FILMGENREBYDEFAULT) ?
+    films.filter((film)=>film.filmInfo.ganre.includes(newGenre)) :
+    films;
+}
+
 export {
   getRandomInteger,
   getRandomValue,
   getRandomFloat,
   getArray,
+  filterFilms,
 };

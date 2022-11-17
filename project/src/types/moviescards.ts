@@ -22,3 +22,7 @@ export type MovieCard = {
   filmInfo: FilmInfo;
   overviewAndDetails: OverviewAndDetails;
 };
+
+export type Genre = {
+  genre: string;
+};

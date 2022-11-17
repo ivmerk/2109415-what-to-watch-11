@@ -10,7 +10,7 @@ const generateMovieCard = () => {
       poster: getRandomValue(POSTERS),
       picture: getRandomValue(POSTERS),
       title: getRandomValue(TITLES),
-      ganre: Array.from({ length: getRandomInteger(GENRECOUNT.MIN, GENRECOUNT.MAX) }, () => getRandomValue(GENRES)),
+      ganre: Array.from({ length: getRandomInteger(GENRECOUNT.MIN, GENRECOUNT.MAX) }, () => getRandomValue(Object.keys(GENRES))),
       releaseDate: getRandomInteger(VOICESCOUNT.MIN, VOICESCOUNT.MAX),
       src: FILMSRC,
     },
