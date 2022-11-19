@@ -11,7 +11,7 @@ type GenresLostProps = {
 function GenresList(props: GenresLostProps) :JSX.Element {
   const {films} = props;
   const genres = new Set<string>().add(FILMGENREBYDEFAULT);
-  films.map((film) => film.filmInfo.ganre.map((genre) => genres.add(genre)));
+  films.map((film) => genres.add(film.genre));
   const genresArr:string[] = [...genres];
   const dispatch = useAppDispatch();
   return(
