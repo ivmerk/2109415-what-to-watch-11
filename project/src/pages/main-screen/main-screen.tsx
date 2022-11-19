@@ -8,10 +8,9 @@ type MainScreenProps = {
   filmTop: MovieCard;
   films:MovieCard[];
 }
-let newGenre = FILMGENREBYDEFAULT;
 
 function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
-  newGenre = useAppSelector((state) => state.genre);
+  const newGenre = useAppSelector((state) => state.genre);
   let filteredFilms = films;
   if (newGenre !== FILMGENREBYDEFAULT) {
     filteredFilms = films.filter((film)=>film.genre.includes(newGenre));}
