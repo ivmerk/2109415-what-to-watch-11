@@ -1,5 +1,8 @@
 // import dayjs from 'dayjs';
 
+import { FILMGENREBYDEFAULT } from '../const';
+import { MovieCard } from '../types/moviescards';
+
 //dayjs.extend(duration);
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
@@ -62,4 +65,5 @@ export {
   getRandomValue,
   getRandomFloat,
   getArray,
+  filterFilms,
 };
