@@ -2,7 +2,7 @@ import FilmsList from '../../components/films-list/films-list';
 import GenresList from '../../components/genres-list/genres-list';
 import { MovieCard } from '../../types/moviescards';
 import { useAppSelector } from '../../hooks';
-import { FILMGENREBYDEFAULT } from '../../const';
+import { filterFilms } from '../../utils/utils';
 
 type MainScreenProps = {
   filmTop: MovieCard;
@@ -11,9 +11,9 @@ type MainScreenProps = {
 
 function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
   const newGenre = useAppSelector((state) => state.genre);
-  let filteredFilms = films;
-  if (newGenre !== FILMGENREBYDEFAULT) {
-    filteredFilms = films.filter((film)=>film.genre.includes(newGenre));}
+
+  const filteredFilms = filterFilms(films, newGenre);
+
 
   return (
     <>
