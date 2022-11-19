@@ -1,28 +1,27 @@
 import { MovieCard } from '../types/moviescards';
 import { getRandomFloat, getRandomInteger, getRandomValue } from '../utils/utils';
-import { GENRECOUNT, GENRES, NAME_COUNT, ACTORS, DIRECTORS, FILM_COUNT, POSTERS, RATING, RELEASEDATE, TITLES, VOICESCOUNT, DESCRIPTION, FILMSRC } from './const';
+import { GENRES, NAME_COUNT, ACTORS, DIRECTORS, FILM_COUNT, POSTERS, RATING, RELEASEDATE, TITLES, VOICESCOUNT, DESCRIPTION, FILMSRC } from './const';
 
 
 const generateMovieCard = () => {
   const card:MovieCard = {
     id: 0,
-    filmInfo: {
-      poster: getRandomValue(POSTERS),
-      picture: getRandomValue(POSTERS),
-      title: getRandomValue(TITLES),
-      ganre: Array.from({ length: getRandomInteger(GENRECOUNT.MIN, GENRECOUNT.MAX) }, () => getRandomValue(Object.keys(GENRES))),
-      releaseDate: getRandomInteger(VOICESCOUNT.MIN, VOICESCOUNT.MAX),
-      src: FILMSRC,
-    },
-    overviewAndDetails: {
-      description: DESCRIPTION,
-      rating: getRandomFloat(RATING.MAX),
-      ratingDecription: DESCRIPTION,
-      voiceCount: getRandomInteger(VOICESCOUNT.MAX),
-      director: getRandomValue(DIRECTORS),
-      actors:Array.from({ length: getRandomInteger(1, NAME_COUNT) }, () => getRandomValue(ACTORS)),
-      continuance: getRandomInteger(RELEASEDATE.MIN, RELEASEDATE.MAX),
-    }
+    name: getRandomValue(TITLES),
+    posterImage: getRandomValue(POSTERS),
+    previewImage: getRandomValue(POSTERS),
+    backgroundImage: getRandomValue(POSTERS),
+    backgroundColor: getRandomValue(POSTERS),
+    videoLink: FILMSRC,
+    previewVideoLink: FILMSRC,
+    description: DESCRIPTION,
+    rating: getRandomFloat(RATING.MAX),
+    scoresCount: getRandomInteger(VOICESCOUNT.MAX),
+    director: getRandomValue(DIRECTORS),
+    starring:[Array.from({ length: getRandomInteger(1, NAME_COUNT) }, () => getRandomValue(ACTORS)).join()],
+    runTime: getRandomInteger(RELEASEDATE.MIN, RELEASEDATE.MAX),
+    genre: getRandomValue(Object.keys(GENRES)),
+    released: getRandomInteger(VOICESCOUNT.MIN, VOICESCOUNT.MAX),
+    isFavorite: false,
   };
 
   return card;

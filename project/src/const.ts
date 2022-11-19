@@ -15,6 +15,12 @@ export enum AuthorizationStatus {
 }
 
 
+export enum APIRoute {
+  Films = '/films',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum FilmGenre {
   AllGanres = 'ALL',
   Comedy = 'COMEDY',

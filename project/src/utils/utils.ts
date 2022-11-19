@@ -51,6 +51,12 @@ function getArray(count:number):number[] {
   return result;
 }
 
+function filterFilms(films :MovieCard[], newGenre :string):MovieCard[] {
+  return (newGenre !== FILMGENREBYDEFAULT) ?
+    films.filter((film)=>film.genre.includes(newGenre)) :
+    films;
+}
+
 export {
   getRandomInteger,
   getRandomValue,

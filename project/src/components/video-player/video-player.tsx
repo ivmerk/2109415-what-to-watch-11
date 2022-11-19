@@ -11,7 +11,7 @@ type VideoPlayerProps = {
 
 function VideoPlayer( props: VideoPlayerProps):JSX.Element{
   const {autoPlay, muted, film} = props;
-  const {filmInfo} = film;
+  const {posterImage, videoLink} = film;
 
   // const [isLoading, setIsLoading] = useState(true);
   // const [isPlaying, setIsPlaying] = useState(autoPlay);
@@ -46,13 +46,13 @@ function VideoPlayer( props: VideoPlayerProps):JSX.Element{
 
   return(
     <video autoPlay={autoPlay}
-      poster={filmInfo.poster}
+      poster={posterImage}
       muted={muted}
       width="100%"
       ref={videoRef}
     >
-      <source src={filmInfo.src} type="video/mp4"/>
-      <source src={filmInfo.src} type="video/webm"/>
+      <source src={videoLink} type="video/mp4"/>
+      <source src={videoLink} type="video/webm"/>
         Sorry, your browser doesnt support embedded videos.
     </video>
   );
