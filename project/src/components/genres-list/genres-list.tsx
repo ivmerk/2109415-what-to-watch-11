@@ -1,6 +1,6 @@
 import React from 'react';
 import { MovieCard } from '../../types/moviescards';
-import changeGenre from '../../store/action';
+import {changeGenre} from '../../store/action';
 import { useAppDispatch } from '../../hooks';
 import { FILMGENREBYDEFAULT } from '../../const';
 

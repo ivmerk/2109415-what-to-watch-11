@@ -14,7 +14,7 @@ function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
   newGenre = useAppSelector((state) => state.genre);
   let filteredFilms = films;
   if (newGenre !== FILMGENREBYDEFAULT) {
-    filteredFilms = films.filter((film)=>film.filmInfo.ganre.includes(newGenre));}
+    filteredFilms = films.filter((film)=>film.genre.includes(newGenre));}
 
   return (
     <>
