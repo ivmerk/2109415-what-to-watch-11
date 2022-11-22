@@ -11,6 +11,7 @@ type MainScreenProps = {
 
 function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
   const newGenre = useAppSelector((state) => state.genre);
+
   const filteredFilms = filterFilms(films, newGenre);
 
 

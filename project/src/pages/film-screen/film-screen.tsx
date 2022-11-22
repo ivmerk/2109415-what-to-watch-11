@@ -5,15 +5,13 @@ type FilmScreenProps = {
 }
 
 function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
-  const {filmInfo, overviewAndDetails} = filmTop;
-  const {title, poster, picture, ganre, releaseDate} = filmInfo;
-  const {description, rating, voiceCount, director, actors} = overviewAndDetails;
+  const {name, posterImage, genre, released, rating, director, scoresCount, description,starring} = filmTop;
   return(
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={picture} alt={title} />
+            <img src={posterImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -41,10 +39,10 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{ganre[0]}</span>
-                <span className="film-card__year">{releaseDate}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -70,7 +68,7 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={poster} alt={`${title}+poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name}+poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -92,7 +90,7 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
                 <div className="film-rating__score">{rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{voiceCount}</span>
+                  <span className="film-rating__count">{scoresCount}</span>
                 </p>
               </div>
 
@@ -101,7 +99,7 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
 
                 <p className="film-card__director"><strong>Director: {director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: {actors.join(', ')} and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {starring.join(', ')} and other</strong></p>
               </div>
             </div>
           </div>

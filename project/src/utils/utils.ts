@@ -56,7 +56,7 @@ function getArray(count:number):number[] {
 
 function filterFilms(films :MovieCard[], newGenre :string):MovieCard[] {
   return (newGenre !== FILMGENREBYDEFAULT) ?
-    films.filter((film)=>film.filmInfo.ganre.includes(newGenre)) :
+    films.filter((film)=>film.genre.includes(newGenre)) :
     films;
 }
 

@@ -31,7 +31,7 @@ function AddReviewScreen( props:AddReviewScreenProps):JSX.Element{
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{filmTop.filmInfo.title}</a>
+                <a href="film-page.html" className="breadcrumbs__link">{filmTop.name}</a>
               </li>
               <li className="breadcrumbs__item">
                 {/* <a className="breadcrumbs__link">Add review</a> */}
@@ -52,7 +52,7 @@ function AddReviewScreen( props:AddReviewScreenProps):JSX.Element{
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt={filmTop.filmInfo.title} width="218" height="327" />
+          <img src="img/the-grand-budapest-hotel-poster.jpg" alt={filmTop.name} width="218" height="327" />
         </div>
       </div>
 

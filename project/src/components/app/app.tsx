@@ -9,15 +9,24 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { MovieCard } from '../../types/moviescards';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 type AppScreenProps = {
-  films: MovieCard[];
   filmTop: MovieCard;
 
 };
 
+function App({filmTop}:AppScreenProps): JSX.Element {
 
-function App({films, filmTop}:AppScreenProps): JSX.Element {
+  const films = useAppSelector((state) => state.films);
+  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsLoading);
+  if (isFilmsDataLoading) {
+    return(
+      <LoadingScreen/>
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>

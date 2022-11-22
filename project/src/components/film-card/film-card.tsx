@@ -11,8 +11,7 @@ type FilmCardProps = {
 function FilmCard(props: FilmCardProps): JSX.Element {
   const{id} = props;
   const{film} = props;
-  const {filmInfo} = film;
-  const{picture, title} = filmInfo;
+  const{posterImage, name} = film;
   let timer = setTimeout(()=>null, 100);
   const [isActiveCard, setActiveCard] = useState(false);
   const urlOfFilm:string = AppRoute.Film.slice(0,-2) + id.toString();
@@ -39,8 +38,8 @@ function FilmCard(props: FilmCardProps): JSX.Element {
             :
             <
               img
-              src={picture}
-              alt={title}
+              src={posterImage}
+              alt={name}
               key={id}
               id={`film-${id}`}
               width="280"
@@ -49,11 +48,10 @@ function FilmCard(props: FilmCardProps): JSX.Element {
         </div>
       </Link>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{title}{isActiveCard.toString()}</a>
+        <a className="small-film-card__link" href="film-page.html">{name}{isActiveCard.toString()}</a>
       </h3>
     </article>
   );
 }
 
 export default FilmCard;
-
