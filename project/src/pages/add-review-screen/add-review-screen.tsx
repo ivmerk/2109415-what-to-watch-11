@@ -1,4 +1,6 @@
+import { Helmet } from 'react-helmet-async';
 import AddReview from '../../components/add-review/add-review';
+import Logo from '../../components/logo/logo';
 import { MovieCard } from '../../types/moviescards';
 
 type AddReviewScreenProps = {
@@ -12,6 +14,9 @@ function AddReviewScreen( props:AddReviewScreenProps):JSX.Element{
 
   return(
     <section className="film-card film-card--full">
+      <Helmet>
+        <title>Add review...</title>
+      </Helmet>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
@@ -20,13 +25,7 @@ function AddReviewScreen( props:AddReviewScreenProps):JSX.Element{
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo/>
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">

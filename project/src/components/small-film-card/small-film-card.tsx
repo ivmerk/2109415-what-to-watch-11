@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { MovieCard } from '../../types/moviescards';
 import VideoPlayer from '../video-player/video-player';
-type FilmCardProps = {
+type SmallFilmCardProps = {
   film:MovieCard;
   id:number;
 }
 
-function FilmCard(props: FilmCardProps): JSX.Element {
+function SmallFilmCard(props: SmallFilmCardProps): JSX.Element {
   const{id} = props;
   const{film} = props;
   const{posterImage, name} = film;
@@ -54,4 +54,4 @@ function FilmCard(props: FilmCardProps): JSX.Element {
   );
 }
 
-export default FilmCard;
+export default SmallFilmCard;

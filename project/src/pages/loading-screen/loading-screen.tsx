@@ -1,6 +1,13 @@
+import { Helmet } from 'react-helmet-async';
+
 function LoadingScreen(): JSX.Element {
   return (
-    <p>Loading ...</p>
+    <section className="loading">
+      <Helmet>
+        <title>Loading...</title>
+      </Helmet>
+      <p>Loading ...</p>
+    </section>
   );
 }
 

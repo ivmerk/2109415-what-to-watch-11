@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { MovieCard } from '../../types/moviescards';
 
 type PlayerScreenProps = {
@@ -7,6 +8,9 @@ type PlayerScreenProps = {
 function PlayerScreen({filmTop}:PlayerScreenProps):JSX.Element{
   return(
     <div className="player">
+      <Helmet>
+        <title>Player</title>
+      </Helmet>
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
