@@ -7,7 +7,6 @@ import { logoutAction } from '../../store/api-actions';
 function UserBlock():JSX.Element{
 
   const avatarUrl = useAppSelector((state) => state.avatarUrl);
-
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
