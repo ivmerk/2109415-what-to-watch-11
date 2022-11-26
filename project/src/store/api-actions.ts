@@ -63,6 +63,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   },
 );
 
+
 export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
