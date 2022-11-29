@@ -1,3 +1,5 @@
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -26,6 +28,12 @@ export enum FilmGenre {
   Comedy = 'COMEDY',
   Triller = 'TRILLER',
   Drama = 'Drama',
+}
+
+export enum FilmInfoTab {
+  Overview = 'OVERVIEW',
+  Details = 'DETAILS',
+  Reviews = 'REVIEWS',
 }
 
 export const FILMGENREBYDEFAULT = 'All genres';
