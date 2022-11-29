@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+// import { useAppSelector } from '../../hooks';
 
 type LogoProps = {
   name?: string;
 }
 function Logo({name}:LogoProps): JSX.Element {
- 
+
   return (
     <div className="logo">
       <Link
