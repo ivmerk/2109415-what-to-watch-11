@@ -1,3 +1,7 @@
+import { Helmet } from 'react-helmet-async';
+import FilmScreenTabs from '../../components/film-screen-tabs/film-screen-tabs';
+import Logo from '../../components/logo/logo';
+import UserBlock from '../../components/user-block/user-block';
 import { MovieCard } from '../../types/moviescards';
 
 type FilmScreenProps = {
@@ -9,6 +13,9 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
   return(
     <>
       <section className="film-card film-card--full">
+        <Helmet>
+          <title>Film Details</title>
+        </Helmet>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={posterImage} alt={name} />
@@ -17,24 +24,8 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                {/* <a className="user-block__link">Sign out</a> */}
-              </li>
-            </ul>
+            <Logo/>
+            <UserBlock/>
           </header>
 
           <div className="film-card__wrap">
@@ -73,17 +64,7 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    {/* <a href="#" className="film-nav__link">Overview</a> */}
-                  </li>
-                  <li className="film-nav__item">
-                    {/* <a href="#" className="film-nav__link">Details</a> */}
-                  </li>
-                  <li className="film-nav__item">
-                    {/* <a href="#" className="film-nav__link">Reviews</a> */}
-                  </li>
-                </ul>
+                < FilmScreenTabs/>
               </nav>
 
               <div className="film-rating">
@@ -149,13 +130,7 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo name={'logo__link--light'}/>
 
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>

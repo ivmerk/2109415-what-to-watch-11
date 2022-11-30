@@ -1,5 +1,5 @@
 import { MovieCard } from '../../types/moviescards';
-import FilmCard from '../film-card/film-card';
+import SmallFilmCard from '../small-film-card/small-film-card';
 
 type FilmsListProps = {
   films:MovieCard[];
@@ -10,7 +10,7 @@ function FilmsList(props: FilmsListProps) :JSX.Element {
   return (
     <>
       {films.map((film,id) => (
-        <FilmCard film={film} key={film.id} id={id}/>)
+        <SmallFilmCard film={film} key={film.id} id={id}/>)
       )}
     </>
   );

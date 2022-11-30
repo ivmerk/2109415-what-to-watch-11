@@ -3,6 +3,9 @@ import GenresList from '../../components/genres-list/genres-list';
 import { MovieCard } from '../../types/moviescards';
 import { useAppSelector } from '../../hooks';
 import { filterFilms } from '../../utils/utils';
+import PageHeader from '../../components/page-header/page-header';
+import { Helmet } from 'react-helmet-async';
+import Logo from '../../components/logo/logo';
 
 type MainScreenProps = {
   filmTop: MovieCard;
@@ -11,39 +14,22 @@ type MainScreenProps = {
 
 function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
   const newGenre = useAppSelector((state) => state.genre);
-
   const filteredFilms = filterFilms(films, newGenre);
 
 
   return (
     <>
       <section className="film-card">
+        <Helmet>
+          <title>What To Watch</title>
+        </Helmet>
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
         </div>
 
         <h1 className="visually-hidden">WTW:</h1>
 
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        <PageHeader/>
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -97,14 +83,7 @@ function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
+          <Logo name={'logo__link--light'}/>
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>
           </div>
