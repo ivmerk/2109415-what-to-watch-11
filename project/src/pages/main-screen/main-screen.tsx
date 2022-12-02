@@ -6,6 +6,7 @@ import { filterFilms } from '../../utils/utils';
 import PageHeader from '../../components/page-header/page-header';
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 type MainScreenProps = {
   filmTop: MovieCard;
@@ -15,6 +16,7 @@ type MainScreenProps = {
 function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
   const newGenre = useAppSelector((state) => state.genre);
   const filteredFilms = filterFilms(films, newGenre);
+  const renderingFilmsCount = useAppSelector((state) => (state.renderingFilmsCount));
 
 
   return (
@@ -71,16 +73,15 @@ function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
             films={films}
           />
 
-          <div className="catalog__films-list">
-            <FilmsList
-              films={filteredFilms}
-            />
-          </div>
+          <FilmsList
+            films={filteredFilms}
+          />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {(filteredFilms.length >= renderingFilmsCount) ? <ShowMoreButton/> : ''}
+
+
         </section>
+
 
         <footer className="page-footer">
           <Logo name={'logo__link--light'}/>

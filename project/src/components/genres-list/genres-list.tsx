@@ -21,12 +21,11 @@ function GenresList(props: GenresLostProps) :JSX.Element {
           className="catalog__genres-item catalog__genres-item--active"
           key = {genre}
         >
-          <a
+          <div
             onClick={()=>{dispatch(changeGenre(genre));}}
-            href="#"
             className="catalog__genres-link"
           >{genre}
-          </a>
+          </div>
         </li>))}
     </ul>
   );
