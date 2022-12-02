@@ -5,8 +5,8 @@ type FilmsListProps = {
   films:MovieCard[];
 }
 
-function FilmsList(props: FilmsListProps) :JSX.Element {
-  const {films} = props;
+function FilmsList({films }: FilmsListProps) :JSX.Element {
+
   return (
     <>
       {films.map((film,id) => (

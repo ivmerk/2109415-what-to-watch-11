@@ -11,9 +11,20 @@ function UserBlock():JSX.Element{
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  let userBlockTitle = '';
+  if (authorizationStatus === 'AUTH') {
+    userBlockTitle = 'Sign out';} else {
+    userBlockTitle = 'Sign in';
+  }
+
   const handleClick = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    dispatch(logoutAction());
+    if (authorizationStatus === 'AUTH') {
+      dispatch(logoutAction());
+      userBlockTitle = 'Sign in';} else {
+      navigate(AppRoute.Login);
+      userBlockTitle = 'Sign out';
+    }
 
   };
 
@@ -34,19 +45,11 @@ function UserBlock():JSX.Element{
         </div>
       </li>
       <li className="user-block__item">
-        {(authorizationStatus === 'AUTH')
-          ?
-          <button
-            className="user-block__link"
-            onClick={handleClick}
-          >Sign out
-          </button>
-          :
-          <button
-            className="user-block__link"
-            onClick={() => navigate(AppRoute.Login)}
-          >Sign in
-          </button>}
+        <button
+          className="user-block__link"
+          onClick={handleClick}
+        >{userBlockTitle}
+        </button>
 
       </li>
     </ul>

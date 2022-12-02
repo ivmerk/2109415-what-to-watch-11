@@ -67,7 +67,8 @@ function App({filmTop}:AppScreenProps): JSX.Element {
           <Route path={AppRoute.Film}
             element={
               <FilmScreen
-                filmTop = {filmTop}
+                selectedFilm= {filmTop}
+                films = {films}
               />
             }
           />
