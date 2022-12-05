@@ -1,19 +1,36 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 import FilmCardDesc from '../../components/film-card-desc/film-card-desc';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFilmAction } from '../../store/api-actions';
 import { MovieCard } from '../../types/moviescards';
 import { filterFilms } from '../../utils/utils';
+import { FilmID } from '../../types/moviescards';
 
-type FilmScreenProps = {
-  selectedFilm: MovieCard;
-  films: MovieCard[];
-}
+function FilmScreen():JSX.Element{
+  const params = useParams();
+  // if (params.id){
+  //   const filmId:FilmID = {id: params.id};
+  //   console.log(filmId);
+  // }
+  const dispatch = useAppDispatch();
 
-function FilmScreen({selectedFilm, films}: FilmScreenProps):JSX.Element{
-  const {name, posterImage, backgroundImage, genre, released} = selectedFilm;
-  const filteredFilms = filterFilms(films, genre).slice(0,4);
+  useEffect(() => {
+    debugger;
+    if(params.id){
+      dispatch(getFilmAction(params.id));
+    }
+  }, [params.id]);
+
+
+  const film = useAppSelector((state) => state.selectedFilm);
+
+  console.log(film);
+  const{backgroundImage, name, genre, } = film;
   return(
     <>
       <section className="film-card film-card--full">
@@ -76,9 +93,7 @@ function FilmScreen({selectedFilm, films}: FilmScreenProps):JSX.Element{
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmsList
-              films={filteredFilms}
-            />
+            <FilmsList/>
           </div>
         </section>
 

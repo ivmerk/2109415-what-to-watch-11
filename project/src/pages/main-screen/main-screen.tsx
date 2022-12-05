@@ -1,23 +1,15 @@
 import FilmsList from '../../components/films-list/films-list';
 import GenresList from '../../components/genres-list/genres-list';
 import { MovieCard } from '../../types/moviescards';
-import { useAppSelector } from '../../hooks';
-import { filterFilms } from '../../utils/utils';
 import PageHeader from '../../components/page-header/page-header';
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
-import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 type MainScreenProps = {
-  filmTop: MovieCard;
   films:MovieCard[];
 }
 
-function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
-  const newGenre = useAppSelector((state) => state.genre);
-  const filteredFilms = filterFilms(films, newGenre);
-  const renderingFilmsCount = useAppSelector((state) => (state.renderingFilmsCount));
-
+function MainScreen( { films}:MainScreenProps) :JSX.Element {
 
   return (
     <>
@@ -73,12 +65,7 @@ function MainScreen( {filmTop, films}:MainScreenProps) :JSX.Element {
             films={films}
           />
 
-          <FilmsList
-            films={filteredFilms}
-          />
-
-          {(filteredFilms.length >= renderingFilmsCount) ? <ShowMoreButton/> : ''}
-
+          <FilmsList/>
 
         </section>
 

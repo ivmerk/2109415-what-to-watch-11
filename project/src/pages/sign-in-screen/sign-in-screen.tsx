@@ -6,7 +6,6 @@ import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {AuthData} from '../../types/auth-data';
 import { AppRoute } from '../../const';
-// import {AppRoute} from '../../const';
 
 function SignInScreen():JSX.Element{
   const loginRef = useRef<HTMLInputElement | null>(null);

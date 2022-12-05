@@ -6,6 +6,8 @@ export const changeGenre = createAction<string>('list/changeGenre');
 
 export const loadFilms = createAction<MovieCard[]>('data/loadFilms');
 
+export const getFilm = createAction<MovieCard | null>('data/getFilm');
+
 export const increaseRenderingFilmsCount = createAction<number>('list/increaseRenderingFilmsCount');
 
 export const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus');
