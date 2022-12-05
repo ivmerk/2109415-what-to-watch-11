@@ -42,9 +42,7 @@ export const getFilmAction = createAsyncThunk<void, string, {
   'data/getFilm',
   async (id, {dispatch, extra: api}) => {
     dispatch(setFilmsLoadingStatus(true));
-    const {data} = await api.get<MovieCard>(getApiFilmUrlByID(id));
-    console.log(getApiFilmUrlByID(id));
-    console.log({data});
+    const {data} = await api.get<MovieCard>(`/films/${id}`);
     dispatch(setFilmsLoadingStatus(false));
     dispatch(getFilm(data));
   },
