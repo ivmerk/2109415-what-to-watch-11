@@ -13,24 +13,26 @@ import { FilmID } from '../../types/moviescards';
 
 function FilmScreen():JSX.Element{
   const params = useParams();
-  // if (params.id){
-  //   const filmId:FilmID = {id: params.id};
-  //   console.log(filmId);
-  // }
   const dispatch = useAppDispatch();
+  const filmId = params.id;
 
   useEffect(() => {
     debugger;
-    if(params.id){
-      dispatch(getFilmAction(params.id));
+    if(filmId){
+      dispatch(getFilmAction(filmId));
     }
-  }, [params.id]);
+  }, [dispatch, filmId]);
 
 
-  const film = useAppSelector((state) => state.selectedFilm);
+  const newFilm = useAppSelector((state) => state.selectedFilm);
 
-  console.log(film);
-  const{backgroundImage, name, genre, } = film;
+  const getSelectedFilm = (film: MovieCard|null) :MovieCard => {if(film) {
+    return film;
+  }};
+
+  const selectedFilm = getSelectedFilm(newFilm);
+
+  const{backgroundImage, name, genre, } = selectedFilm;
   return(
     <>
       <section className="film-card film-card--full">
