@@ -1,4 +1,7 @@
 export const TIMEOUT_SHOW_ERROR = 2000;
+export const SAME_GENRE_FILMS_QT = 4;
+export const FILM_COUNT_PER_STEP = 8;
+
 
 export enum AppRoute {
   Main = '/',
@@ -19,6 +22,13 @@ export enum AuthorizationStatus {
 
 export enum APIRoute {
   Films = '/films',
+  SelectedFilm = '/films/',
+  SimularFilms = '/films/{filmId}/similar',
+  PromoFilm = '/promo',
+  FavoritesFilms = '/favorite',
+  ChangeStatus = '/favorite/{filmId}/{status}',
+  Comments = '/comments/{filmId}',
+  PostComment = '/comments/{filmId}',
   Login = '/login',
   Logout = '/logout',
 }
@@ -30,10 +40,6 @@ export enum FilmGenre {
   Drama = 'Drama',
 }
 
-export enum FilmInfoTab {
-  Overview = 'OVERVIEW',
-  Details = 'DETAILS',
-  Reviews = 'REVIEWS',
-}
+export const FilmInfoTab = ['Overview', 'Details', 'Reviews'];
 
 export const FILMGENREBYDEFAULT = 'All genres';

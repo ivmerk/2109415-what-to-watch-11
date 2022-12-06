@@ -1,11 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { FILMGENREBYDEFAULT, AuthorizationStatus } from '../const';
-import {changeGenre, loadFilms, setFilmsLoadingStatus, requireAuthorization, setError, logIn } from './action';
+import { FILMGENREBYDEFAULT, AuthorizationStatus, FILM_COUNT_PER_STEP } from '../const';
+import {changeGenre, loadFilms, setFilmsLoadingStatus, requireAuthorization, setError, logIn, increaseRenderingFilmsCount, getFilm } from './action';
 import { MovieCard} from '../types/moviescards';
 
 type InitialState = {
   genre: string;
   films: MovieCard[];
+  selectedFilm: MovieCard|null;
+  renderingFilmsCount: number;
   isFilmsLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
@@ -15,6 +17,8 @@ type InitialState = {
 const initialState: InitialState = {
   genre: FILMGENREBYDEFAULT,
   films: [],
+  selectedFilm: null,
+  renderingFilmsCount: FILM_COUNT_PER_STEP,
   isFilmsLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
@@ -28,6 +32,12 @@ export const updateStore = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
+    })
+    .addCase(getFilm, (state, actions) => {
+      state.selectedFilm = actions.payload;
+    })
+    .addCase(increaseRenderingFilmsCount, (state) => {
+      state.renderingFilmsCount = state.renderingFilmsCount + FILM_COUNT_PER_STEP;
     })
     .addCase(setFilmsLoadingStatus, (state, action) => {
       state.isFilmsLoading = action.payload;

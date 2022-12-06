@@ -3,11 +3,12 @@ import { AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import { MovieCard } from '../types/moviescards';
 import {AppDispatch, State} from '../types/state';
-import { loadFilms, setFilmsLoadingStatus, requireAuthorization, setError, logIn} from './action';
+import { loadFilms, setFilmsLoadingStatus, requireAuthorization, setError, logIn, getFilm} from './action';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {saveToken, dropToken} from '../services/token';
 import {store} from './';
+import { getApiFilmUrlByID } from '../utils/geturl';
 
 export const clearErrorAction = createAsyncThunk(
   'data/clearError',
@@ -30,6 +31,20 @@ export const loadFilmsAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<MovieCard[]>(APIRoute.Films);
     dispatch(setFilmsLoadingStatus(false));
     dispatch(loadFilms(data));
+  },
+);
+
+export const getFilmAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/getFilm',
+  async (id, {dispatch, extra: api}) => {
+    dispatch(setFilmsLoadingStatus(true));
+    const {data} = await api.get<MovieCard>(`/films/${id}`);
+    dispatch(setFilmsLoadingStatus(false));
+    dispatch(getFilm(data));
   },
 );
 

@@ -38,7 +38,6 @@ function App({filmTop}:AppScreenProps): JSX.Element {
         <Routes>
           <Route path={AppRoute.Main} element={
             <MainScreen
-              filmTop = {filmTop}
               films = {films}
             />
           }
@@ -50,10 +49,7 @@ function App({filmTop}:AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <MyListScreen
-                  filmTop = {filmTop}
-                  films = {films}
-                />
+                <MyListScreen/>
               </PrivateRoute>
             }
           />
@@ -66,9 +62,7 @@ function App({filmTop}:AppScreenProps): JSX.Element {
           />
           <Route path={AppRoute.Film}
             element={
-              <FilmScreen
-                filmTop = {filmTop}
-              />
+              <FilmScreen/>
             }
           />
           <Route path={AppRoute.AddReview}

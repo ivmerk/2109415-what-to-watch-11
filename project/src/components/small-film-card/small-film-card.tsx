@@ -1,20 +1,19 @@
 import { useState} from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Link, useNavigate } from 'react-router-dom';
 import { MovieCard } from '../../types/moviescards';
+import { getFilmUrlByID } from '../../utils/geturl';
 import VideoPlayer from '../video-player/video-player';
 type SmallFilmCardProps = {
-  film:MovieCard;
+  selectedFilm:MovieCard;
   id:number;
 }
 
-function SmallFilmCard(props: SmallFilmCardProps): JSX.Element {
-  const{id} = props;
-  const{film} = props;
-  const{posterImage, name} = film;
+function SmallFilmCard({selectedFilm: film}: SmallFilmCardProps): JSX.Element {
+  const{posterImage, name, id} = film;
+
+  const navigate = useNavigate();
   let timer = setTimeout(()=>null, 100);
   const [isActiveCard, setActiveCard] = useState(false);
-  const urlOfFilm:string = AppRoute.Film.slice(0,-2) + id.toString();
 
   function onMouseOverHandle() {
     timer = setTimeout(()=>setActiveCard(true),1000);
@@ -25,13 +24,20 @@ function SmallFilmCard(props: SmallFilmCardProps): JSX.Element {
     setActiveCard(false);
   }
 
+  function onMouseClickHandle() {
+    navigate(getFilmUrlByID(id.toString()));
+  }
+
   return (
+
     <article className="small-film-card catalog__films-card">
-      <Link to={urlOfFilm} >
+      <Link to={`/films/${id}`}>
         <div
           className="small-film-card__image"
           onMouseOver={onMouseOverHandle}
           onMouseOut={onMouseOutHandle}
+
+          onClick={onMouseClickHandle}
         >
           {isActiveCard
             ? <VideoPlayer autoPlay muted film={film} />
@@ -46,12 +52,11 @@ function SmallFilmCard(props: SmallFilmCardProps): JSX.Element {
               height="175"
             />}
         </div>
+        <h3 className="small-film-card__title">
+          <Link className="small-film-card__link" to={`/films/${id}`}>{name}{isActiveCard.toString()}</Link>
+        </h3>
       </Link>
-      <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}{isActiveCard.toString()}</a>
-      </h3>
     </article>
   );
 }
-
 export default SmallFilmCard;

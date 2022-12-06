@@ -11,8 +11,6 @@ type AddReviewProps = {
 
 function AddReview( props:AddReviewProps):JSX.Element{
 
-  // const{filmTop} = props;
-
   const [userComment, setUserComment] = useState('');
   const [userRating, setUserRating] = useState(6);
 

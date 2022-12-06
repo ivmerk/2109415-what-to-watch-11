@@ -1,3 +1,4 @@
+
 export type FilmInfo = {
   poster:string;
   picture:string;
@@ -39,4 +40,9 @@ export type MovieCard = {
 
 export type Genre = {
   genre: string;
+};
+
+
+export type FilmID = {
+  id: string;
 };

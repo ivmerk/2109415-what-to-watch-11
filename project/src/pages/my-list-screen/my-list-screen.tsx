@@ -1,15 +1,10 @@
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import {Helmet} from 'react-helmet-async';
-import { MovieCard } from '../../types/moviescards';
 import UserBlock from '../../components/user-block/user-block';
 
-type MyListScreenProps = {
-  filmTop: MovieCard;
-  films: MovieCard[];
-}
 
-function MyListScreen({filmTop, films}:MyListScreenProps): JSX.Element{
+function MyListScreen(): JSX.Element{
   return(
     <div className="user-page">
       <Helmet>
@@ -24,11 +19,8 @@ function MyListScreen({filmTop, films}:MyListScreenProps): JSX.Element{
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__films-list">
-          <FilmsList
-            films={films}
-          />
-        </div>
+        <FilmsList/>
+
       </section>
 
       <footer className="page-footer">

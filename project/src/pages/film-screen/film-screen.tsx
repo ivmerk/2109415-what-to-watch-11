@@ -1,15 +1,38 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import FilmScreenTabs from '../../components/film-screen-tabs/film-screen-tabs';
+import { useParams } from 'react-router-dom';
+import FilmCardDesc from '../../components/film-card-desc/film-card-desc';
+import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFilmAction } from '../../store/api-actions';
 import { MovieCard } from '../../types/moviescards';
+import { filterFilms } from '../../utils/utils';
+import { FilmID } from '../../types/moviescards';
 
-type FilmScreenProps = {
-  filmTop: MovieCard;
-}
+function FilmScreen():JSX.Element{
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const filmId = params.id;
 
-function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
-  const {name, posterImage, genre, released, rating, director, scoresCount, description,starring} = filmTop;
+  useEffect(() => {
+    debugger;
+    if(filmId){
+      dispatch(getFilmAction(filmId));
+    }
+  }, [dispatch, filmId]);
+
+
+  const newFilm = useAppSelector((state) => state.selectedFilm);
+
+  const getSelectedFilm = (film: MovieCard|null) :MovieCard => {if(film) {
+    return film;
+  }};
+
+  const selectedFilm = getSelectedFilm(newFilm);
+
+  const{backgroundImage, name, genre, } = selectedFilm;
   return(
     <>
       <section className="film-card film-card--full">
@@ -18,7 +41,7 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
         </Helmet>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={posterImage} alt={name} />
+            <img src={backgroundImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -61,28 +84,9 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
             <div className="film-card__poster film-card__poster--big">
               <img src={posterImage} alt={`${name}+poster`} width="218" height="327" />
             </div>
-
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                < FilmScreenTabs/>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{scoresCount}</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{description}</p>
-
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {starring.join(', ')} and other</strong></p>
-              </div>
-            </div>
+            < FilmCardDesc
+              selectedFilm = {selectedFilm}
+            />
           </div>
         </div>
       </section>
@@ -91,41 +95,7 @@ function FilmScreen({filmTop}: FilmScreenProps):JSX.Element{
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
-              </h3>
-            </article>
+            <FilmsList/>
           </div>
         </section>
 
