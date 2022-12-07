@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
-import { MovieCard } from '../types/moviescards';
+import { MovieCard, Comment } from '../types/moviescards';
 import {AppDispatch, State} from '../types/state';
-import { loadFilms, setFilmsLoadingStatus, requireAuthorization, setError, logIn, getFilm} from './action';
+import { loadFilms, loadSameGenreFilms,loadComments, setFilmsLoadingStatus, requireAuthorization, setError, logIn, getFilm} from './action';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {saveToken, dropToken} from '../services/token';
 import {store} from './';
-import { getApiFilmUrlByID } from '../utils/geturl';
+import { CommentData } from '../types/comment-data';
 
 export const clearErrorAction = createAsyncThunk(
   'data/clearError',
@@ -41,10 +41,44 @@ export const getFilmAction = createAsyncThunk<void, string, {
 }>(
   'data/getFilm',
   async (id, {dispatch, extra: api}) => {
-    dispatch(setFilmsLoadingStatus(true));
     const {data} = await api.get<MovieCard>(`/films/${id}`);
-    dispatch(setFilmsLoadingStatus(false));
     dispatch(getFilm(data));
+  },
+);
+
+export const loadSameGenreFilmsAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/loadSameGenreFilms',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<MovieCard[]>(`/films/${id}/similar`);
+    dispatch(loadSameGenreFilms(data));
+  },
+);
+
+export const loadCommentsAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/loadComments',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Comment[]>(`/comments/${id}`);
+    dispatch(loadComments(data));
+  },
+);
+
+export const postRewiewAction = createAsyncThunk<void, CommentData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/postRewiew',
+  async ({comment, rating, id}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Comment[]>(`/comments/${id}`, {comment, rating});
+    dispatch(loadComments(data));
   },
 );
 

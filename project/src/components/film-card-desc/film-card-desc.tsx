@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { FilmInfoTab } from '../../const';
 
-import { MovieCard } from '../../types/moviescards';
+import { Comment, MovieCard } from '../../types/moviescards';
 import Details from './details/details';
 import Overview from './overview/overview';
 import Reviews from './reviews/reviews';
 
 type FilmCardDescProps = {
   selectedFilm: MovieCard;
+  comments: Comment[];
 }
 
 
-function FilmCardDesc({selectedFilm}: FilmCardDescProps): JSX.Element{
+function FilmCardDesc({selectedFilm, comments}: FilmCardDescProps): JSX.Element{
 
   const[activeTab, selectActiveTab] = useState(FilmInfoTab[0]);
 
@@ -39,7 +40,7 @@ function FilmCardDesc({selectedFilm}: FilmCardDescProps): JSX.Element{
 
       {(activeTab === 'Overview') ? <Overview selectedFilm={selectedFilm}/> : ''}
       {(activeTab === 'Details') ? <Details selectedFilm={selectedFilm}/> : ''}
-      {(activeTab === 'Reviews') ? <Reviews/> : ''}
+      {(activeTab === 'Reviews') ? <Reviews comments = {comments}/> : ''}
 
     </div>
   );

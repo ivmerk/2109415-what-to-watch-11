@@ -2,9 +2,13 @@ import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import {Helmet} from 'react-helmet-async';
 import UserBlock from '../../components/user-block/user-block';
-
+import { useAppSelector } from '../../hooks';
+import { filterFilms } from '../../utils/utils';
 
 function MyListScreen(): JSX.Element{
+  const films = useAppSelector((state) => (state.films));
+  const newGenre = useAppSelector((state) => state.genre);
+  const filteredFilms = filterFilms(films, newGenre);
   return(
     <div className="user-page">
       <Helmet>
@@ -19,7 +23,9 @@ function MyListScreen(): JSX.Element{
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList/>
+        <FilmsList
+          films={filteredFilms}
+        />
 
       </section>
 

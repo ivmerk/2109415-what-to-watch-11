@@ -1,38 +1,50 @@
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import {useParams, Link } from 'react-router-dom';
 import FilmCardDesc from '../../components/film-card-desc/film-card-desc';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilmAction } from '../../store/api-actions';
+import { getFilmAction, loadCommentsAction, loadSameGenreFilmsAction } from '../../store/api-actions';
 import { MovieCard } from '../../types/moviescards';
-import { filterFilms } from '../../utils/utils';
-import { FilmID } from '../../types/moviescards';
-
+import { getAddReviewUlrByID } from '../../utils/geturl';
+import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundPage from '../not-found-page/not-found-page';
 function FilmScreen():JSX.Element{
   const params = useParams();
   const dispatch = useAppDispatch();
   const filmId = params.id;
+  const newFilm = useAppSelector((state) => state.selectedFilm);
+  const sameGenreFilms = useAppSelector((state) => state.sameGenreFilms);
+  const error = useAppSelector((state) => state.error);
+  const comments = useAppSelector((state) => state.comments);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   useEffect(() => {
-    debugger;
+
     if(filmId){
       dispatch(getFilmAction(filmId));
+      dispatch(loadSameGenreFilmsAction(filmId));
+      dispatch(loadCommentsAction(filmId));
     }
   }, [dispatch, filmId]);
 
-
-  const newFilm = useAppSelector((state) => state.selectedFilm);
-
-  const getSelectedFilm = (film: MovieCard|null) :MovieCard => {if(film) {
+  const getSelectedFilm = (film: MovieCard|null) :MovieCard | undefined => {if(film) {
     return film;
   }};
 
   const selectedFilm = getSelectedFilm(newFilm);
+  if(error) { return <NotFoundPage/>;}
 
-  const{backgroundImage, name, genre, } = selectedFilm;
+  if (typeof selectedFilm === 'undefined' ) {
+    return(
+      <HelmetProvider>
+        <LoadingScreen/>
+      </HelmetProvider>
+    );
+  }
+  const{backgroundImage, name, genre, released, posterImage, id} = selectedFilm;
   return(
     <>
       <section className="film-card film-card--full">
@@ -73,7 +85,14 @@ function FilmScreen():JSX.Element{
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                {(authorizationStatus === 'AUTH')
+                  ?
+                  <Link
+                    className="btn film-card__button"
+                    to={getAddReviewUlrByID(id.toString())}
+                  >Add review
+                  </Link>
+                  : ''}
               </div>
             </div>
           </div>
@@ -85,6 +104,7 @@ function FilmScreen():JSX.Element{
               <img src={posterImage} alt={`${name}+poster`} width="218" height="327" />
             </div>
             < FilmCardDesc
+              comments = {comments}
               selectedFilm = {selectedFilm}
             />
           </div>
@@ -95,7 +115,9 @@ function FilmScreen():JSX.Element{
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <FilmsList/>
+            <FilmsList
+              films={sameGenreFilms}
+            />
           </div>
         </section>
 

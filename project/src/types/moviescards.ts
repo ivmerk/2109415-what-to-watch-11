@@ -1,4 +1,3 @@
-
 export type FilmInfo = {
   poster:string;
   picture:string;
@@ -45,4 +44,15 @@ export type Genre = {
 
 export type FilmID = {
   id: string;
+};
+
+export type Comment = {
+  comment: string;
+  date: string;
+  id: number;
+  rating: number;
+  user: {
+  id: number;
+  name: string;
+  };
 };
