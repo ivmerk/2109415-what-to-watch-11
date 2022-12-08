@@ -43,3 +43,9 @@ export enum FilmGenre {
 export const FilmInfoTab = ['Overview', 'Details', 'Reviews'];
 
 export const FILMGENREBYDEFAULT = 'All genres';
+
+export enum NameSpace {
+  Data = 'DATA',
+  Film = 'FILM',
+  User = 'USER'
+}

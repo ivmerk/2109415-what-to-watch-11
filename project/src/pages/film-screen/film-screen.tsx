@@ -7,6 +7,7 @@ import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmAction, loadCommentsAction, loadSameGenreFilmsAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { MovieCard } from '../../types/moviescards';
 import { getAddReviewUlrByID } from '../../utils/geturl';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -16,10 +17,10 @@ function FilmScreen():JSX.Element{
   const dispatch = useAppDispatch();
   const filmId = params.id;
   const newFilm = useAppSelector((state) => state.selectedFilm);
-  const sameGenreFilms = useAppSelector((state) => state.sameGenreFilms);
+  const sameGenreFilms = useAppSelector((state) => state.sameGenreFilms).slice(1);
   const error = useAppSelector((state) => state.error);
   const comments = useAppSelector((state) => state.comments);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
 
@@ -114,11 +115,9 @@ function FilmScreen():JSX.Element{
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            <FilmsList
-              films={sameGenreFilms}
-            />
-          </div>
+          <FilmsList
+            films={sameGenreFilms}
+          />
         </section>
 
         <footer className="page-footer">

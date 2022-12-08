@@ -12,6 +12,8 @@ import { MovieCard } from '../../types/moviescards';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
+// import {getQuestionsDataLoadingStatus} from '../../store/game-data/selectors';
 
 type AppScreenProps = {
   filmTop: MovieCard;
@@ -20,7 +22,7 @@ type AppScreenProps = {
 
 function App({filmTop}:AppScreenProps): JSX.Element {
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isFilmsDataLoading = useAppSelector((state) => state.isFilmsLoading);
   if (isFilmsDataLoading) {
     return(
