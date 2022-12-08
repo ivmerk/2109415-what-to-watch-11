@@ -1,16 +1,15 @@
 import FilmsList from '../../components/films-list/films-list';
 import GenresList from '../../components/genres-list/genres-list';
-import { MovieCard } from '../../types/moviescards';
 import PageHeader from '../../components/page-header/page-header';
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
+import { useAppSelector } from '../../hooks';
+import { filterFilms } from '../../utils/utils';
 
-type MainScreenProps = {
-  films:MovieCard[];
-}
-
-function MainScreen( { films}:MainScreenProps) :JSX.Element {
-
+function MainScreen() :JSX.Element {
+  const films = useAppSelector((state) => (state.films));
+  const newGenre = useAppSelector((state) => state.genre);
+  const filteredFilms = filterFilms(films, newGenre);
   return (
     <>
       <section className="film-card">
@@ -20,11 +19,8 @@ function MainScreen( { films}:MainScreenProps) :JSX.Element {
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
         </div>
-
         <h1 className="visually-hidden">WTW:</h1>
-
         <PageHeader/>
-
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
@@ -60,16 +56,13 @@ function MainScreen( { films}:MainScreenProps) :JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <GenresList
             films={films}
           />
-
-          <FilmsList/>
-
+          <FilmsList
+            films={filteredFilms}
+          />
         </section>
-
-
         <footer className="page-footer">
           <Logo name={'logo__link--light'}/>
           <div className="copyright">

@@ -20,7 +20,6 @@ type AppScreenProps = {
 
 function App({filmTop}:AppScreenProps): JSX.Element {
 
-  const films = useAppSelector((state) => state.films);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isFilmsDataLoading = useAppSelector((state) => state.isFilmsLoading);
   if (isFilmsDataLoading) {
@@ -37,9 +36,7 @@ function App({filmTop}:AppScreenProps): JSX.Element {
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Main} element={
-            <MainScreen
-              films = {films}
-            />
+            <MainScreen/>
           }
           />
           <Route path={AppRoute.Login} element={<SignInScreen/>} />

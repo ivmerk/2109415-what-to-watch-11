@@ -4,11 +4,11 @@ import {changeGenre} from '../../store/action';
 import { useAppDispatch } from '../../hooks';
 import { FILMGENREBYDEFAULT } from '../../const';
 
-type GenresLostProps = {
+type GenresListProps = {
   films: MovieCard[];
 }
 
-function GenresList(props: GenresLostProps) :JSX.Element {
+function GenresList(props: GenresListProps) :JSX.Element {
   const {films} = props;
   const genres = new Set<string>().add(FILMGENREBYDEFAULT);
   films.map((film) => genres.add(film.genre));
