@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import MainScreen from '../../pages/main-screen/main-screen';
 import { AppRoute } from '../../const';
@@ -12,8 +12,12 @@ import { MovieCard } from '../../types/moviescards';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import {getAuthorizationStatus, getAuthCheckedStatus} from '../../store/user-process/selectors';
+import {getAuthorizationStatus } from '../../store/user-process/selectors';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
+import { getFilmsDataLoadingStatus } from '../../store/film-data/selectors';
 // import {getQuestionsDataLoadingStatus} from '../../store/game-data/selectors';
+
 
 type AppScreenProps = {
   filmTop: MovieCard;
@@ -23,7 +27,7 @@ type AppScreenProps = {
 function App({filmTop}:AppScreenProps): JSX.Element {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsLoading);
+  const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
   if (isFilmsDataLoading) {
     return(
       <HelmetProvider>
@@ -34,8 +38,7 @@ function App({filmTop}:AppScreenProps): JSX.Element {
 
   return (
     <HelmetProvider>
-
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Main} element={
             <MainScreen/>
@@ -77,7 +80,7 @@ function App({filmTop}:AppScreenProps): JSX.Element {
           />
           <Route path='*' element={<NotFoundPage/>} />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MovieCard } from '../../types/moviescards';
-import {changeGenre} from '../../store/action';
+import {changeGenre} from '../../store/film-process/film-process';
 import { useAppDispatch } from '../../hooks';
 import { FILMGENREBYDEFAULT } from '../../const';
 
@@ -16,7 +16,7 @@ function GenresList(props: GenresListProps) :JSX.Element {
   const dispatch = useAppDispatch();
   return(
     <ul className="catalog__genres-list">
-      {genresArr.map((genre) => (
+      {genresArr.map((genre: string) => (
         <li
           className="catalog__genres-item catalog__genres-item--active"
           key = {genre}

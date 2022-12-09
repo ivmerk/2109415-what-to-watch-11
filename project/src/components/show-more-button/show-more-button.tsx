@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks';
-import { increaseRenderingFilmsCount } from '../../store/action';
+import { increaseRenderingFilmsCount } from '../../store/film-process/film-process';
 import { FILM_COUNT_PER_STEP} from '../../const';
 
 function ShowMoreButton(){

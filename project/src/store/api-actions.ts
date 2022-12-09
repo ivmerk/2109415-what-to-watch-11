@@ -40,7 +40,8 @@ export const getFilmAction = createAsyncThunk<MovieCard | null, string, {
   'data/getFilm',
   async (id, {extra: api}) => {
     const {data} = await api.get<MovieCard>(`/films/${id}`);
-    return data;}
+    return data;
+  },
 );
 
 export const loadSameGenreFilmsAction = createAsyncThunk<MovieCard[], string, {

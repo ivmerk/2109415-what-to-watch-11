@@ -1,4 +1,3 @@
-export const TIMEOUT_SHOW_ERROR = 2000;
 export const SAME_GENRE_FILMS_QT = 4;
 export const FILM_COUNT_PER_STEP = 8;
 

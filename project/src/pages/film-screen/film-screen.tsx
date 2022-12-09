@@ -7,6 +7,7 @@ import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmAction, loadCommentsAction, loadSameGenreFilmsAction } from '../../store/api-actions';
+import { getComments, getHasError, getSameGenreFilms, getSelectedFilm } from '../../store/film-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { MovieCard } from '../../types/moviescards';
 import { getAddReviewUlrByID } from '../../utils/geturl';
@@ -16,10 +17,10 @@ function FilmScreen():JSX.Element{
   const params = useParams();
   const dispatch = useAppDispatch();
   const filmId = params.id;
-  const newFilm = useAppSelector((state) => state.selectedFilm);
-  const sameGenreFilms = useAppSelector((state) => state.sameGenreFilms).slice(1);
-  const error = useAppSelector((state) => state.error);
-  const comments = useAppSelector((state) => state.comments);
+  const newFilm = useAppSelector(getSelectedFilm);
+  const sameGenreFilms = useAppSelector(getSameGenreFilms).slice(1);
+  const hasError = useAppSelector(getHasError);
+  const comments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
@@ -31,12 +32,12 @@ function FilmScreen():JSX.Element{
     }
   }, [dispatch, filmId]);
 
-  const getSelectedFilm = (film: MovieCard|null) :MovieCard | undefined => {if(film) {
+  const checkSelectedFilm = (film: MovieCard|null) :MovieCard | undefined => {if(film) {
     return film;
   }};
 
-  const selectedFilm = getSelectedFilm(newFilm);
-  if(error) { return <NotFoundPage/>;}
+  const selectedFilm = checkSelectedFilm(newFilm);
+  if(hasError) { return <NotFoundPage/>;}
 
   if (typeof selectedFilm === 'undefined' ) {
     return(

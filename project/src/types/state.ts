@@ -13,12 +13,12 @@ export type FilmData = {
   sameGenreFilms:MovieCard[];
   comments: Comment[];
   isFilmsLoading: boolean;
+  hasError: boolean;
 };
 
 export type FilmProcess = {
   genre: string;
   renderingFilmsCount: number;
-  error: string | null;
 };
 
 export type State = ReturnType<typeof store.getState>;

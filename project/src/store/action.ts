@@ -19,5 +19,8 @@
 
 
 // export const setError = createAction<string | null>('data/setError');
+import {createAction} from '@reduxjs/toolkit';
+import {AppRoute} from '../const';
 
-export{};
+export const redirectToRoute = createAction<AppRoute>('film/redirectToRoute');
+

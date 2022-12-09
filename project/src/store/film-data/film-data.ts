@@ -9,6 +9,7 @@ const initialState: FilmData = {
   sameGenreFilms:[],
   comments:[],
   isFilmsLoading: false,
+  hasError: false,
 };
 
 export const filmData = createSlice({
@@ -19,10 +20,15 @@ export const filmData = createSlice({
     builder
       .addCase(loadFilmsAction.pending, (state) => {
         state.isFilmsLoading = true;
+        state.hasError = false;
       })
       .addCase(loadFilmsAction.fulfilled, (state, actions) => {
         state.films = actions.payload;
         state.isFilmsLoading = false;
+      })
+      .addCase( loadFilmsAction.rejected, (state) => {
+        state.isFilmsLoading = false;
+        state.hasError = true;
       })
       .addCase( getFilmAction.fulfilled, (state, actions) => {
         state.selectedFilm = actions.payload;
