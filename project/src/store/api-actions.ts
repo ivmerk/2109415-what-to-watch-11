@@ -3,22 +3,10 @@ import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 import { MovieCard, Comment } from '../types/moviescards';
 import {AppDispatch, State} from '../types/state';
-// import { setError } from './action';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {saveToken, dropToken} from '../services/token';
-// import {store} from './';
 import { CommentData } from '../types/comment-data';
-
-// const clearErrorAction = createAsyncThunk(
-//   'data/clearError',
-//   () => {
-//     setTimeout(
-//       () => store.dispatch(setError(null)),
-//       TIMEOUT_SHOW_ERROR,
-//     );
-//   },
-// );
 
 export const loadFilmsAction = createAsyncThunk<MovieCard[], undefined, {
   dispatch: AppDispatch;
@@ -80,14 +68,15 @@ export const postRewiewAction = createAsyncThunk<Comment[], CommentData, {
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<string, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
   async (_arg, {extra: api}) => {
-    await api.get(APIRoute.Login);
+    const {data: {avatarUrl}} = await api.get<UserData>(APIRoute.Login);
+    return avatarUrl;
   },
 );
 

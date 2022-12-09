@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useCallback, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MovieCard } from '../../types/moviescards';
 import { getFilmUrlByID } from '../../utils/geturl';
@@ -15,18 +15,18 @@ function SmallFilmCard({selectedFilm: film}: SmallFilmCardProps): JSX.Element {
   let timer = setTimeout(()=>null, 100);
   const [isActiveCard, setActiveCard] = useState(false);
 
-  function onMouseOverHandle() {
+  const onMouseOverHandle = useCallback(() => {
     timer = setTimeout(()=>setActiveCard(true),1000);
-  }
+  }, []);
 
-  function onMouseOutHandle() {
+  const onMouseOutHandle = useCallback(() => {
     clearTimeout(timer);
-    setActiveCard(false);
-  }
+    setActiveCard(false);},[timer]
+  );
 
-  function onMouseClickHandle() {
-    navigate(getFilmUrlByID(id.toString()));
-  }
+  const onMouseClickHandle = useCallback(() =>
+    navigate(getFilmUrlByID(id.toString())), [id, navigate]);
+
 
   return (
 

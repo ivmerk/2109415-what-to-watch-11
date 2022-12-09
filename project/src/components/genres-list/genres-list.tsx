@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import { MovieCard } from '../../types/moviescards';
 import {changeGenre} from '../../store/film-process/film-process';
 import { useAppDispatch } from '../../hooks';
@@ -14,6 +14,12 @@ function GenresList(props: GenresListProps) :JSX.Element {
   films.map((film) => genres.add(film.genre));
   const genresArr:string[] = [...genres];
   const dispatch = useAppDispatch();
+
+  const onClickHandle = useCallback((evt:MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    dispatch(changeGenre(evt.currentTarget.id));
+  },[dispatch]);
+
   return(
     <ul className="catalog__genres-list">
       {genresArr.map((genre: string) => (
@@ -22,7 +28,8 @@ function GenresList(props: GenresListProps) :JSX.Element {
           key = {genre}
         >
           <div
-            onClick={()=>{dispatch(changeGenre(genre));}}
+            onClick={onClickHandle}
+            id = {genre}
             className="catalog__genres-link"
           >{genre}
           </div>

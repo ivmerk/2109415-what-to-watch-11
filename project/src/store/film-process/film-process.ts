@@ -15,7 +15,7 @@ export const filmProcess = createSlice({
       state.genre = actions.payload;
     },
     increaseRenderingFilmsCount: (state, actions: PayloadAction<number>) => {
-      state.renderingFilmsCount = actions.payload;
+      state.renderingFilmsCount += FILM_COUNT_PER_STEP;
     },
   }
 });
