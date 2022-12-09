@@ -2,12 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormEvent} from 'react';
-import { logoutAction } from '../../store/api-actions';
+import { logOutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getAvatarUrl } from '../../store/user-process/selectors';
 
 function UserBlock():JSX.Element{
 
-  const avatarUrl = useAppSelector((state) => state.avatarUrl);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const avatarUrl = useAppSelector(getAvatarUrl);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ function UserBlock():JSX.Element{
   const handleClick = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     if (authorizationStatus === 'AUTH') {
-      dispatch(logoutAction());
+      dispatch(logOutAction());
       userBlockTitle = 'Sign in';} else {
       navigate(AppRoute.Login);
       userBlockTitle = 'Sign out';
