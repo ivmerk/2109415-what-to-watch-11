@@ -8,6 +8,7 @@ export const getSelectedFilm = (state: State) :MovieCard | null => state[NameSpa
 export const getSameGenreFilms = (state: State) :MovieCard[] => state[NameSpace.Data].sameGenreFilms;
 export const getComments = (state: State) :Comment[] => state[NameSpace.Data].comments;
 export const getIsFilmsLoading = (state: State) :boolean => state[NameSpace.Data].isFilmsLoading;
-export const getHasError = (state: State) :boolean => state[NameSpace.Data].hasError;
-
-
+export const getErrorStatus = (state: State) :boolean => state[NameSpace.Data].hasError;
+export const getPromoFilm = (state: State) :MovieCard | null => state[NameSpace.Data].promoFilm;
+export const getFavoriteFilms = (state: State) :MovieCard[] => state[NameSpace.Data].favoriteFilms;
+export const getChangedFilm = (state: State) :MovieCard | null => state[NameSpace.Data].changedFavoriteFilms;

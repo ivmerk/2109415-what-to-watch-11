@@ -8,26 +8,20 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import FilmScreen from '../../pages/film-screen/film-screen';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { MovieCard } from '../../types/moviescards';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import {getAuthorizationStatus } from '../../store/user-process/selectors';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
-import { getFilmsDataLoadingStatus } from '../../store/film-data/selectors';
-// import {getQuestionsDataLoadingStatus} from '../../store/game-data/selectors';
+import { getErrorStatus, getFilmsDataLoadingStatus } from '../../store/film-data/selectors';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 
 
-type AppScreenProps = {
-  filmTop: MovieCard;
-
-};
-
-function App({filmTop}:AppScreenProps): JSX.Element {
-
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isFilmsDataLoading = useAppSelector(getFilmsDataLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
   if (isFilmsDataLoading) {
     return(
       <HelmetProvider>
@@ -36,6 +30,11 @@ function App({filmTop}:AppScreenProps): JSX.Element {
     );
   }
 
+  if (hasError){
+    return (
+      <ErrorScreen/>
+    );
+  }
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
@@ -57,9 +56,7 @@ function App({filmTop}:AppScreenProps): JSX.Element {
           />
           <Route path={AppRoute.Player}
             element={
-              <PlayerScreen
-                filmTop = {filmTop}
-              />
+              <PlayerScreen/>
             }
           />
           <Route path={AppRoute.Film}
@@ -72,9 +69,7 @@ function App({filmTop}:AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={authorizationStatus}
               >
-                <AddReviewScreen
-                  filmTop = {filmTop}
-                />
+                <AddReviewScreen/>
               </PrivateRoute>
             }
           />

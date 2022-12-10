@@ -2,16 +2,14 @@ import { Helmet } from 'react-helmet-async';
 import AddReview from '../../components/add-review/add-review';
 import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
-import { MovieCard } from '../../types/moviescards';
+import { useAppSelector } from '../../hooks';
+import { getSelectedFilm } from '../../store/film-data/selectors';
+import NotFoundPage from '../not-found-page/not-found-page';
 
-type AddReviewScreenProps = {
-  filmTop: MovieCard;
-}
+function AddReviewScreen():JSX.Element{
+  const film = useAppSelector(getSelectedFilm);
 
-function AddReviewScreen( props:AddReviewScreenProps):JSX.Element{
-
-  const{filmTop} = props;
-
+  if(!film) {return <NotFoundPage/>;}
 
   return(
     <section className="film-card film-card--full">
@@ -31,7 +29,7 @@ function AddReviewScreen( props:AddReviewScreenProps):JSX.Element{
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{filmTop.name}</a>
+                <a href="film-page.html" className="breadcrumbs__link">{film.name}</a>
               </li>
               <li className="breadcrumbs__item">
                 {/* <a className="breadcrumbs__link">Add review</a> */}
@@ -43,7 +41,7 @@ function AddReviewScreen( props:AddReviewScreenProps):JSX.Element{
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt={filmTop.name} width="218" height="327" />
+          <img src="img/the-grand-budapest-hotel-poster.jpg" alt={film.name} width="218" height="327" />
         </div>
       </div>
 

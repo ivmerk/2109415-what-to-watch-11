@@ -7,19 +7,20 @@ import Logo from '../../components/logo/logo';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmAction, loadCommentsAction, loadSameGenreFilmsAction } from '../../store/api-actions';
-import { getComments, getHasError, getSameGenreFilms, getSelectedFilm } from '../../store/film-data/selectors';
+import { getComments, getErrorStatus, getSameGenreFilms, getSelectedFilm } from '../../store/film-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { MovieCard } from '../../types/moviescards';
 import { getAddReviewUlrByID } from '../../utils/geturl';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
+
 function FilmScreen():JSX.Element{
   const params = useParams();
   const dispatch = useAppDispatch();
   const filmId = params.id;
   const newFilm = useAppSelector(getSelectedFilm);
   const sameGenreFilms = useAppSelector(getSameGenreFilms).slice(1);
-  const hasError = useAppSelector(getHasError);
+  const hasError = useAppSelector(getErrorStatus);
   const comments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 

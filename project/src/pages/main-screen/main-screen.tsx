@@ -9,9 +9,12 @@ import { getFilms } from '../../store/film-data/selectors';
 import { getGenre } from '../../store/film-process/selectors';
 
 function MainScreen() :JSX.Element {
+
   const films = useAppSelector(getFilms);
   const newGenre = useAppSelector(getGenre);
   const filteredFilms = filterFilms(films, newGenre);
+
+
   return (
     <>
       <section className="film-card">

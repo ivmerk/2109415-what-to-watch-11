@@ -7,6 +7,8 @@ import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
 import {saveToken, dropToken} from '../services/token';
 import { CommentData } from '../types/comment-data';
+import { getCommentsUrlByID, getFilmUrlByID, getSimilarFilmsById } from '../utils/geturl';
+import { FavoriteFilmStatus } from '../types/favorite-film-status';
 
 export const loadFilmsAction = createAsyncThunk<MovieCard[], undefined, {
   dispatch: AppDispatch;
@@ -27,7 +29,19 @@ export const getFilmAction = createAsyncThunk<MovieCard | null, string, {
 }>(
   'data/getFilm',
   async (id, {extra: api}) => {
-    const {data} = await api.get<MovieCard>(`/films/${id}`);
+    const {data} = await api.get<MovieCard | null>(getFilmUrlByID(id));
+    return data;
+  },
+);
+
+export const getPromoAction = createAsyncThunk<MovieCard | null, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/getPromo',
+  async (_arg, {extra: api})=>{
+    const {data} = await api.get<MovieCard | null>(APIRoute.PromoFilm);
     return data;
   },
 );
@@ -39,7 +53,31 @@ export const loadSameGenreFilmsAction = createAsyncThunk<MovieCard[], string, {
 }>(
   'data/loadSameGenreFilms',
   async (id, {extra: api}) => {
-    const {data} = await api.get<MovieCard[]>(`/films/${id}/similar`);
+    const {data} = await api.get<MovieCard[]>(getSimilarFilmsById(id));
+    return data;
+  },
+);
+
+export const loadFavoriteFilmsAction = createAsyncThunk<MovieCard[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/loadFavoriteFilms',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<MovieCard[]>(APIRoute.FavoritesFilms);
+    return data;
+  },
+);
+
+export const changeFavoriteFilmAction = createAsyncThunk<MovieCard | null, FavoriteFilmStatus, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/changeFavoriteFilm',
+  async ({filmId, status}, {extra: api}) => {
+    const {data} = await api.post<MovieCard | null>(APIRoute.FavoritesFilms, {filmId, status});
     return data;
   },
 );
@@ -51,7 +89,7 @@ export const loadCommentsAction = createAsyncThunk<Comment[], string, {
 }>(
   'data/loadComments',
   async (id, {extra: api}) => {
-    const {data} = await api.get<Comment[]>(`/comments/${id}`);
+    const {data} = await api.get<Comment[]>(getCommentsUrlByID(id));
     return data;
   },
 );
@@ -63,7 +101,7 @@ export const postRewiewAction = createAsyncThunk<Comment[], CommentData, {
 }>(
   'data/postRewiew',
   async ({comment, rating, id}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Comment[]>(`/comments/${id}`, {comment, rating});
+    const {data} = await api.post<Comment[]>(getCommentsUrlByID(id), {comment, rating});
     return data;
   },
 );
