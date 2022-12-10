@@ -1,4 +1,3 @@
-export const TIMEOUT_SHOW_ERROR = 2000;
 export const SAME_GENRE_FILMS_QT = 4;
 export const FILM_COUNT_PER_STEP = 8;
 
@@ -43,3 +42,9 @@ export enum FilmGenre {
 export const FilmInfoTab = ['Overview', 'Details', 'Reviews'];
 
 export const FILMGENREBYDEFAULT = 'All genres';
+
+export enum NameSpace {
+  Data = 'DATA',
+  Film = 'FILM',
+  User = 'USER'
+}

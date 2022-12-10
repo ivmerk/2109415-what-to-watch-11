@@ -5,10 +5,12 @@ import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
 import { filterFilms } from '../../utils/utils';
+import { getFilms } from '../../store/film-data/selectors';
+import { getGenre } from '../../store/film-process/selectors';
 
 function MainScreen() :JSX.Element {
-  const films = useAppSelector((state) => (state.films));
-  const newGenre = useAppSelector((state) => state.genre);
+  const films = useAppSelector(getFilms);
+  const newGenre = useAppSelector(getGenre);
   const filteredFilms = filterFilms(films, newGenre);
   return (
     <>
