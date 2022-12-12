@@ -1,5 +1,4 @@
 import {Link} from 'react-router-dom';
-// import { useAppSelector } from '../../hooks';
 
 type LogoProps = {
   name?: string;

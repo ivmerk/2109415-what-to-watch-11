@@ -1,19 +1,88 @@
+import { useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { MovieCard } from '../../types/moviescards';
+import { useState} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { getFilms } from '../../store/film-data/selectors';
+import NotFoundPage from '../not-found-page/not-found-page';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { AppRoute } from '../../const';
 
-type PlayerScreenProps = {
-  filmTop: MovieCard;
-}
 
-function PlayerScreen({filmTop}:PlayerScreenProps):JSX.Element{
+function PlayerScreen():JSX.Element{
+  const params = useParams();
+  const filmId = params.id;
+  const films = useAppSelector(getFilms);
+  const navigate = useNavigate();
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const muted = false;
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    let isVideoPlayerMounted = true;
+
+    if (videoRef.current === null){
+      return;
+    }
+
+    videoRef.current.addEventListener('loadeddata', () => {
+      if (isVideoPlayerMounted){
+        setIsLoading(false);
+      }
+    });
+
+    if (isPlaying){
+      videoRef.current.play();
+      return;
+    }
+
+    videoRef.current.pause();
+
+    return () => {
+      isVideoPlayerMounted = false;
+    };
+  },[isPlaying]);
+
+  const onPlayClickHandle = () => {
+    setIsPlaying(!isPlaying);
+  };
+  const onFullScreenClickHandle = () => {
+    // console.log('click');
+  };
+
+  const onExitClickHandle = () => {
+    navigate(AppRoute.Main);
+  };
+  if(!filmId) { return <NotFoundPage/>;}
+  const film = films[(+filmId) - 1];
+  const {videoLink, name, posterImage} = film;
+  if(isLoading) {
+    <LoadingScreen/>;
+  }
   return(
     <div className="player">
       <Helmet>
         <title>Player</title>
       </Helmet>
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video
+        autoPlay = {isPlaying}
+        className="player__video"
+        muted={muted}
+        poster={posterImage}
+        ref={videoRef}
+      >
+        <source src={videoLink} type="video/mp4"/>
+        Sorry, your browser doesnt support embedded videos.
+      </video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button
+        type="button"
+        className="player__exit"
+        onClick={onExitClickHandle}
+      >Exit
+      </button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -25,15 +94,32 @@ function PlayerScreen({filmTop}:PlayerScreenProps):JSX.Element{
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
+          <button
+            type="button"
+            className="player__play"
+            onClick={onPlayClickHandle}
+          >
+            <svg
+              viewBox={(isPlaying) ? '0 0 14 21' : '0 0 19 19'}
+              width={(isPlaying) ? '14' : '10'}
+              height={(isPlaying) ? '21' : '19'}
+            >
+              <use
+                xlinkHref={(isPlaying) ? '#pause' : '#play-s'}
+              >
+              </use>
             </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">{filmTop.name}</div>
+            <span>{(isPlaying) ? 'Pause' : 'Play'}</span>
+            <span>Pause</span>
 
-          <button type="button" className="player__full-screen">
+          </button>
+          <div className="player__name">{name}</div>
+
+          <button
+            type="button"
+            className="player__full-screen"
+            onClick={onFullScreenClickHandle}
+          >
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>

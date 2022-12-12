@@ -2,24 +2,28 @@ import { useEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import {useParams, Link } from 'react-router-dom';
 import FilmCardDesc from '../../components/film-card-desc/film-card-desc';
+import FilmCardTitle from '../../components/film-card-title/film-card-title';
 import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
+import MyList from '../../components/my-list/my-list';
+import PlayButton from '../../components/play-button/play-button';
 import UserBlock from '../../components/user-block/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmAction, loadCommentsAction, loadSameGenreFilmsAction } from '../../store/api-actions';
-import { getComments, getHasError, getSameGenreFilms, getSelectedFilm } from '../../store/film-data/selectors';
+import { getComments, getErrorStatus, getSameGenreFilms, getSelectedFilm } from '../../store/film-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { MovieCard } from '../../types/moviescards';
 import { getAddReviewUlrByID } from '../../utils/geturl';
 import LoadingScreen from '../loading-screen/loading-screen';
 import NotFoundPage from '../not-found-page/not-found-page';
+
 function FilmScreen():JSX.Element{
   const params = useParams();
   const dispatch = useAppDispatch();
   const filmId = params.id;
   const newFilm = useAppSelector(getSelectedFilm);
   const sameGenreFilms = useAppSelector(getSameGenreFilms).slice(1);
-  const hasError = useAppSelector(getHasError);
+  const hasError = useAppSelector(getErrorStatus);
   const comments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
@@ -46,7 +50,7 @@ function FilmScreen():JSX.Element{
       </HelmetProvider>
     );
   }
-  const{backgroundImage, name, genre, released, posterImage, id} = selectedFilm;
+  const{backgroundImage, name, posterImage, id} = selectedFilm;
   return(
     <>
       <section className="film-card film-card--full">
@@ -67,26 +71,15 @@ function FilmScreen():JSX.Element{
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{released}</span>
-              </p>
+              <FilmCardTitle
+                film = {selectedFilm}
+              />
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 18 14" width="18" height="14">
-                    <use xlinkHref="#in-list"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <PlayButton
+                  film={selectedFilm}
+                />
+                <MyList/>
                 {(authorizationStatus === 'AUTH')
                   ?
                   <Link

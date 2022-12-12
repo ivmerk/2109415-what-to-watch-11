@@ -10,7 +10,12 @@ export type UserProcess = {
 export type FilmData = {
   films: MovieCard[];
   selectedFilm: MovieCard | null;
+  promoFilm: MovieCard | null;
   sameGenreFilms:MovieCard[];
+  favoriteFilms: MovieCard[];
+  isFavoriteFilmsLoading: boolean;
+  changedFavoriteFilms: MovieCard | null;
+  isFavoriteFilmsChanging: boolean;
   comments: Comment[];
   isFilmsLoading: boolean;
   hasError: boolean;

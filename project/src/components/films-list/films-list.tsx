@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import { MovieCard } from '../../types/moviescards';
 import { getRenderingFilmsCount } from '../../store/film-process/selectors';
+import { useMemo } from 'react';
 
 type FilmListPropes = {
   films: MovieCard[];
@@ -10,7 +11,7 @@ type FilmListPropes = {
 
 function FilmsList({films} :FilmListPropes) :JSX.Element {
   const renderingFilmsCount = useAppSelector(getRenderingFilmsCount);
-  const renderedFilms = films.slice(0, renderingFilmsCount);
+  const renderedFilms = useMemo(() => films.slice(0, renderingFilmsCount), [films, renderingFilmsCount]);
 
   return (
     <>
