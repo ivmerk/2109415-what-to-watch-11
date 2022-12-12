@@ -1,44 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { getFavoriteFilms, getIsFavoriteFilmsChanging, getIsFavoriteFilmsLoading, getSelectedFilm } from '../../store/film-data/selectors';
-import { store } from '../../store';
-import { changeFavoriteFilmAction, getFilmAction, loadFavoriteFilmsAction } from '../../store/api-actions';
+import { AppRoute } from '../../const';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavoriteFilms, getIsFavoriteFilmsChanging, getIsFavoriteFilmsLoading } from '../../store/film-data/selectors';
+import { changeFavoriteFilmAction, loadFavoriteFilmsAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MyList():JSX.Element{
   const params = useParams();
   const getFilmId = () =>(params.id) ? params.id : '1';
   const filmId = parseInt(getFilmId(), 10);
-  const currentFilm = useRef(useAppSelector(getSelectedFilm));
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const favoriteFilms = useRef(useAppSelector(getFavoriteFilms));
   const isFavoriteFilmsChanging = useAppSelector(getIsFavoriteFilmsChanging);
-  const isFavoriteFilmsLoading = useAppSelector(getIsFavoriteFilmsLoading);
+  const isFavoriteFilmsLoading = useRef(useAppSelector(getIsFavoriteFilmsLoading));
   const [isFavorite, setIsFavorite] = useState(true);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
   const [favoriteFilmsCount, setFavoriteFilmsCount] = useState(0);
   const [isFavoriteChange, setIsFavoriteChange] = useState(false);
   const changeStatus = (isFavorite ? 0 : 1);
 
   useEffect(() => {
-
-    store.dispatch(loadFavoriteFilmsAction());
-    if(isFavoriteFilmsLoading){
-      return;
-    }
-
-    store.dispatch(getFilmAction(getFilmId()));
-    if(currentFilm.current === null){
+    dispatch(loadFavoriteFilmsAction());
+    if(isFavoriteFilmsLoading.current){
       return;
     }
     setFavoriteFilmsCount(favoriteFilms.current.length);
-    setIsFavorite(currentFilm.current.isFavorite);
-  },[isFavoriteChange, getFilmId()]);
+    setIsFavorite(!!favoriteFilms.current.find((film) => film.id === filmId));
+  },[isFavoriteChange, filmId]);
 
   const onClickHandle = () => {
-    store.dispatch(changeFavoriteFilmAction({filmId, status: changeStatus }));
+    if(authorizationStatus !== 'AUTH') {navigate(AppRoute.Login);}
+    dispatch(changeFavoriteFilmAction({filmId, status: changeStatus }));
     if(isFavoriteFilmsChanging) {
       return;
     }
-    setIsFavoriteChange((prev) => !prev);
+    setIsFavoriteChange(!isFavoriteChange);
   };
   return (
     <button

@@ -6,6 +6,7 @@ import {getFilmAction, loadFavoriteFilmsAction, loadCommentsAction, loadFilmsAct
 const initialState: FilmData = {
   films: [],
   selectedFilm: null,
+  isSelectedFilmLoading: false,
   promoFilm: null,
   sameGenreFilms:[],
   favoriteFilms:[],
@@ -35,8 +36,12 @@ export const filmData = createSlice({
         state.isFilmsLoading = false;
         state.hasError = true;
       })
+      .addCase( getFilmAction.pending, (state) => {
+        state.isSelectedFilmLoading = true;
+      })
       .addCase( getFilmAction.fulfilled, (state, actions) => {
         state.selectedFilm = actions.payload;
+        state.isSelectedFilmLoading = false;
       })
       .addCase( getPromoAction.fulfilled, (state, actions) => {
         state.promoFilm = actions.payload;
@@ -50,6 +55,7 @@ export const filmData = createSlice({
       .addCase(loadFavoriteFilmsAction.fulfilled, (state, actions) => {
         state.favoriteFilms = actions.payload;
         state.isFavoriteFilmsLoading = false;
+        console.log(state.favoriteFilms);
       })
       .addCase(changeFavoriteFilmAction.pending, (state) => {
         state.isFavoriteFilmsChanging = true;

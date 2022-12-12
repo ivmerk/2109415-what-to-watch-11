@@ -5,6 +5,7 @@ import {State} from '../../types/state';
 export const getFilms = (state: State): MovieCard[] => state[NameSpace.Data].films;
 export const getFilmsDataLoadingStatus = (state: State): boolean => state[NameSpace.Data].isFilmsLoading;
 export const getSelectedFilm = (state: State) :MovieCard | null => state[NameSpace.Data].selectedFilm;
+export const getIsSelectedFilmLoading = (state: State) :boolean => state[NameSpace.Data].isSelectedFilmLoading;
 export const getSameGenreFilms = (state: State) :MovieCard[] => state[NameSpace.Data].sameGenreFilms;
 export const getComments = (state: State) :Comment[] => state[NameSpace.Data].comments;
 export const getIsFilmsLoading = (state: State) :boolean => state[NameSpace.Data].isFilmsLoading;

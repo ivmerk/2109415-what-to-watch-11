@@ -2,15 +2,22 @@ import FilmsList from '../../components/films-list/films-list';
 import Logo from '../../components/logo/logo';
 import {Helmet} from 'react-helmet-async';
 import UserBlock from '../../components/user-block/user-block';
-import { useAppSelector } from '../../hooks';
-import { filterFilms } from '../../utils/utils';
-import { getFilms } from '../../store/film-data/selectors';
-import { getGenre } from '../../store/film-process/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavoriteFilms, getIsFavoriteFilmsLoading } from '../../store/film-data/selectors';
+import { loadFavoriteFilmsAction } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useEffect } from 'react';
 
 function MyListScreen(): JSX.Element{
-  const films = useAppSelector(getFilms);
-  const newGenre = useAppSelector(getGenre);
-  const filteredFilms = filterFilms(films, newGenre);
+  const dispatch = useAppDispatch();
+
+  const films = useAppSelector(getFavoriteFilms);
+  const isFavoriteFilmsLoading = useAppSelector(getIsFavoriteFilmsLoading);
+  useEffect(() => {
+    dispatch(loadFavoriteFilmsAction());},[dispatch]);
+  if(isFavoriteFilmsLoading){
+    <LoadingScreen/>;
+  }
   return(
     <div className="user-page">
       <Helmet>
@@ -18,7 +25,7 @@ function MyListScreen(): JSX.Element{
       </Helmet>
       <header className="page-header user-page__head">
         <Logo />
-        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
+        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{films.length}</span></h1>
         <UserBlock/>
       </header>
 
@@ -26,7 +33,7 @@ function MyListScreen(): JSX.Element{
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <FilmsList
-          films={filteredFilms}
+          films={films}
         />
 
       </section>

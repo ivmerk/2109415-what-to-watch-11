@@ -29,6 +29,10 @@ function UserBlock():JSX.Element{
 
   };
 
+  const avatarClickHandle = () => {
+    navigate(AppRoute.MyList);
+  };
+
   return(
     <ul className="user-block">
       <li className="user-block__item">
@@ -41,6 +45,7 @@ function UserBlock():JSX.Element{
               alt="User avatar"
               width="63"
               height="63"
+              onClick={avatarClickHandle}
             />
             : ''}
         </div>
