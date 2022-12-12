@@ -55,7 +55,6 @@ export const filmData = createSlice({
       .addCase(loadFavoriteFilmsAction.fulfilled, (state, actions) => {
         state.favoriteFilms = actions.payload;
         state.isFavoriteFilmsLoading = false;
-        console.log(state.favoriteFilms);
       })
       .addCase(changeFavoriteFilmAction.pending, (state) => {
         state.isFavoriteFilmsChanging = true;
