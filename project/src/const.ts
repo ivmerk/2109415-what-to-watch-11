@@ -11,7 +11,6 @@ export enum AppRoute {
   AddReview = '/films/:id/review',
 }
 
-
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
