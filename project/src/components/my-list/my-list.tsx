@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFavoriteFilms, getIsFavoriteFilmsChanging, getIsFavoriteFilmsLoading } from '../../store/film-data/selectors';
@@ -16,7 +16,7 @@ function MyList():JSX.Element{
   const favoriteFilms = useRef(useAppSelector(getFavoriteFilms));
   const isFavoriteFilmsChanging = useAppSelector(getIsFavoriteFilmsChanging);
   const isFavoriteFilmsLoading = useRef(useAppSelector(getIsFavoriteFilmsLoading));
-  const [isFavorite, setIsFavorite] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const [favoriteFilmsCount, setFavoriteFilmsCount] = useState(0);
@@ -24,16 +24,17 @@ function MyList():JSX.Element{
   const changeStatus = (isFavorite ? 0 : 1);
 
   useEffect(() => {
+    if (authorizationStatus !== AuthorizationStatus.Auth){return;}
     dispatch(loadFavoriteFilmsAction());
     if(isFavoriteFilmsLoading.current){
       return;
     }
     setFavoriteFilmsCount(favoriteFilms.current.length);
     setIsFavorite(!!favoriteFilms.current.find((film) => film.id === filmId));
-  },[filmId]);
+  },[filmId, authorizationStatus]);
 
   const onClickHandle = () => {
-    if(authorizationStatus !== 'AUTH') {navigate(AppRoute.Login);}
+    if(authorizationStatus !== AuthorizationStatus.Auth) {navigate(AppRoute.Login);}
     dispatch(changeFavoriteFilmAction({filmId, status: changeStatus }));
     if (isFavorite){
       setFavoriteFilmsCount((prev) => prev - 1);}
