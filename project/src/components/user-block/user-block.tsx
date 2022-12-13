@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormEvent} from 'react';
 import { logOutAction } from '../../store/api-actions';
@@ -13,14 +13,14 @@ function UserBlock():JSX.Element{
   const navigate = useNavigate();
 
   let userBlockTitle = '';
-  if (authorizationStatus === 'AUTH') {
+  if (authorizationStatus === AuthorizationStatus.Auth) {
     userBlockTitle = 'Sign out';} else {
     userBlockTitle = 'Sign in';
   }
 
   const handleClick = (evt: FormEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    if (authorizationStatus === 'AUTH') {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(logOutAction());
       userBlockTitle = 'Sign in';} else {
       navigate(AppRoute.Login);

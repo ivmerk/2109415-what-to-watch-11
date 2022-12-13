@@ -30,11 +30,15 @@ function MyList():JSX.Element{
     }
     setFavoriteFilmsCount(favoriteFilms.current.length);
     setIsFavorite(!!favoriteFilms.current.find((film) => film.id === filmId));
-  },[isFavoriteChange, filmId]);
+  },[filmId]);
 
   const onClickHandle = () => {
     if(authorizationStatus !== 'AUTH') {navigate(AppRoute.Login);}
     dispatch(changeFavoriteFilmAction({filmId, status: changeStatus }));
+    if (isFavorite){
+      setFavoriteFilmsCount((prev) => prev - 1);}
+    else {setFavoriteFilmsCount((prev) => prev + 1);}
+    setIsFavorite(!isFavorite);
     if(isFavoriteFilmsChanging) {
       return;
     }
