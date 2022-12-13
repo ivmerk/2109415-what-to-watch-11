@@ -3,6 +3,14 @@ import { AppRoute } from '../const';
 
 export const getApiFilmUrlByID = (filmID: string):string => APIRoute.SelectedFilm + filmID;
 
-export const getFilmUrlByID = (filmID: string):string => AppRoute.Film.slice(0,-3) + filmID;
+export const getFilmUrlByID = (filmID: string):string => AppRoute.Film.replace(':id',filmID);
 
-export const getAddReviewUlrByID = (filmID: string): string => AppRoute.AddReview.slice(0,7) + filmID + AppRoute.AddReview.slice(10,17);
+export const getPlayerUrlByID = (filmID: string):string => AppRoute.Player.replace(':id',filmID);
+
+export const getSimilarFilmsById = (filmID:string):string => APIRoute.SimularFilms.replace('{filmId}',filmID);
+
+export const getCommentsUrlByID = (filmID: string):string => APIRoute.Comments.replace('{filmId}',filmID);
+
+export const getFavoriteUrlByIDwithStatus = (filmID:string, status:string) => APIRoute.ChangeStatus.replace('{filmId}',filmID).replace('{status}', status);
+
+export const getAddReviewUlrByID = (filmID: string): string => AppRoute.AddReview.replace(':id',filmID);

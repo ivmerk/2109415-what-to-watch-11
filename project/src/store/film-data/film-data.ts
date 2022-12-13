@@ -1,12 +1,18 @@
 import {createSlice } from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import { FilmData } from '../../types/state';
-import {getFilmAction, loadCommentsAction, loadFilmsAction, loadSameGenreFilmsAction, postRewiewAction} from '../api-actions';
+import {getFilmAction, loadFavoriteFilmsAction, loadCommentsAction, loadFilmsAction, loadSameGenreFilmsAction, postRewiewAction, getPromoAction, changeFavoriteFilmAction} from '../api-actions';
 
 const initialState: FilmData = {
   films: [],
   selectedFilm: null,
+  isSelectedFilmLoading: false,
+  promoFilm: null,
   sameGenreFilms:[],
+  favoriteFilms:[],
+  isFavoriteFilmsLoading: false,
+  changedFavoriteFilms: null,
+  isFavoriteFilmsChanging: false,
   comments:[],
   isFilmsLoading: false,
   hasError: false,
@@ -30,11 +36,32 @@ export const filmData = createSlice({
         state.isFilmsLoading = false;
         state.hasError = true;
       })
+      .addCase( getFilmAction.pending, (state) => {
+        state.isSelectedFilmLoading = true;
+      })
       .addCase( getFilmAction.fulfilled, (state, actions) => {
         state.selectedFilm = actions.payload;
+        state.isSelectedFilmLoading = false;
+      })
+      .addCase( getPromoAction.fulfilled, (state, actions) => {
+        state.promoFilm = actions.payload;
       })
       .addCase(loadSameGenreFilmsAction.fulfilled, (state, actions) => {
         state.sameGenreFilms = actions.payload;
+      })
+      .addCase(loadFavoriteFilmsAction.pending, (state) => {
+        state.isFavoriteFilmsLoading = true;
+      })
+      .addCase(loadFavoriteFilmsAction.fulfilled, (state, actions) => {
+        state.favoriteFilms = actions.payload;
+        state.isFavoriteFilmsLoading = false;
+      })
+      .addCase(changeFavoriteFilmAction.pending, (state) => {
+        state.isFavoriteFilmsChanging = true;
+      })
+      .addCase(changeFavoriteFilmAction.fulfilled, (state, actions) => {
+        state.isFavoriteFilmsChanging = false;
+        state.changedFavoriteFilms = actions.payload;
       })
       .addCase(loadCommentsAction.fulfilled, (state, actions) => {
         state.comments = actions.payload;
