@@ -43,7 +43,7 @@ function App(): JSX.Element {
             <MainScreen/>
           }
           />
-          <Route path={AppRoute.Login} element={<SignInScreen/>} />
+          <Route path={AppRoute.SingIn} element={<SignInScreen/>} />
           <Route
             path={AppRoute.MyList}
             element={

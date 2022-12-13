@@ -1,9 +1,7 @@
-// import dayjs from 'dayjs';
-
+import { default as dayjs } from 'dayjs';
 import { FILMGENREBYDEFAULT } from '../const';
 import { MovieCard } from '../types/moviescards';
 
-//dayjs.extend(duration);
 // Функция из интернета по генерации случайного числа из диапазона
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 const getRandomInteger = (a = 0, b = 1) => {
@@ -22,30 +20,9 @@ const getRandomFloat = (a = 1, b = 0) => {
 
 const getRandomValue = (items:string[]) => items[getRandomInteger(0, items.length - 1)];
 
-// const formatStringToDateWithTime = (date) => dayjs(date).format('YYYY/MM hh:mm');
 
-// const formatStringToDate = (date) => dayjs(date).format('DD MMMM YYYY');
+const formatStringToDate = (date:string):string => dayjs(date).format('MMMM D, YYYY');
 
-// const formatStringToYear = (date) => dayjs(date).format('YYYY');
-
-// const formatMinutesToTime = (date) => dayjs(date).format('H[h] mm[m]');
-// const formatMinutesToTime = (minutes) => dayjs.duration(minutes, 'minutes').format('H[h] mm[m]');
-
-// const sortByDate = (filmA, filmB) => {
-//   if (filmA.filmInfo.release.date < filmB.filmInfo.release.date) {
-//     return 1;
-//   } else {
-//     return -1;
-//   }
-// };
-
-// const sortByRate = (filmA, filmB) => {
-//   if (filmA.filmInfo.totalRating < filmB.filmInfo.totalRating) {
-//     return 1;
-//   } else {
-//     return -1;
-//   }
-// };
 function getArray(count:number):number[] {
   const result :number[] = [1];
   while (result.length < count) {
@@ -60,10 +37,20 @@ function filterFilms(films :MovieCard[], newGenre :string):MovieCard[] {
     films;
 }
 
+function getRatingDescription (rating :number):string{
+  if (rating === 10) { return 'Awesome';}
+  if (rating >= 8) { return 'Very good';}
+  if (rating >= 5) { return 'Good';}
+  if (rating >= 3) {return 'Normal';}
+  return 'Bad';
+}
+
 export {
   getRandomInteger,
   getRandomValue,
   getRandomFloat,
+  formatStringToDate,
   getArray,
   filterFilms,
+  getRatingDescription,
 };

@@ -1,4 +1,5 @@
 import { MovieCard } from '../../../types/moviescards';
+import { getRatingDescription } from '../../../utils/utils';
 
 type OverviewProps = {
   selectedFilm: MovieCard;
@@ -11,8 +12,8 @@ function Overview({selectedFilm} : OverviewProps): JSX.Element {
       <div className="film-rating">
         <div className="film-rating__score">{rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">Very good</span>
-          <span className="film-rating__count">{scoresCount}</span>
+          <span className="film-rating__level">{getRatingDescription(rating)}</span>
+          <span className="film-rating__count">{scoresCount} ratings</span>
         </p>
       </div>
 

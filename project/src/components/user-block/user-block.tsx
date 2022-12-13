@@ -23,7 +23,7 @@ function UserBlock():JSX.Element{
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(logOutAction());
       userBlockTitle = 'Sign in';} else {
-      navigate(AppRoute.Login);
+      navigate(AppRoute.SingIn);
       userBlockTitle = 'Sign out';
     }
 

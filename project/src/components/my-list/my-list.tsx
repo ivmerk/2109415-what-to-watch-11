@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { AppRoute } from '../../const';
+import { useEffect } from 'react';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavoriteFilms, getIsFavoriteFilmsChanging, getIsFavoriteFilmsLoading } from '../../store/film-data/selectors';
-import { changeFavoriteFilmAction, loadFavoriteFilmsAction } from '../../store/api-actions';
+import { getFavoriteFilms, getSelectedFilm, getIsFavoriteFilmsLoading, getChangedFilm} from '../../store/film-data/selectors';
+import { changeFavoriteFilmAction, loadFavoriteFilmsAction, getFilmAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MyList():JSX.Element{
@@ -13,36 +13,33 @@ function MyList():JSX.Element{
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const favoriteFilms = useRef(useAppSelector(getFavoriteFilms));
-  const isFavoriteFilmsChanging = useAppSelector(getIsFavoriteFilmsChanging);
-  const isFavoriteFilmsLoading = useRef(useAppSelector(getIsFavoriteFilmsLoading));
-  const [isFavorite, setIsFavorite] = useState(true);
+  const film = useAppSelector(getSelectedFilm);
+  const favoriteFilms = useAppSelector(getFavoriteFilms);
+  const isFavoriteFilmsLoading = useAppSelector(getIsFavoriteFilmsLoading);
+  const changedFilm = useAppSelector(getChangedFilm);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const [favoriteFilmsCount, setFavoriteFilmsCount] = useState(0);
-  const [isFavoriteChange, setIsFavoriteChange] = useState(false);
+  let isFavorite = (film?.isFavorite);
+
   const changeStatus = (isFavorite ? 0 : 1);
 
   useEffect(() => {
+    dispatch(getFilmAction(filmId.toString()));
+    if (authorizationStatus !== AuthorizationStatus.Auth){return;}
     dispatch(loadFavoriteFilmsAction());
-    if(isFavoriteFilmsLoading.current){
+    if(isFavoriteFilmsLoading){
       return;
     }
-    setFavoriteFilmsCount(favoriteFilms.current.length);
-    setIsFavorite(!!favoriteFilms.current.find((film) => film.id === filmId));
-  },[filmId]);
+    if(!changedFilm || !film){
+      return;
+    }
+    isFavorite = changedFilm.isFavorite;
+  },[filmId, authorizationStatus, changedFilm]);
 
   const onClickHandle = () => {
-    if(authorizationStatus !== 'AUTH') {navigate(AppRoute.Login);}
+    if(authorizationStatus !== AuthorizationStatus.Auth) {navigate(AppRoute.SingIn);}
     dispatch(changeFavoriteFilmAction({filmId, status: changeStatus }));
-    if (isFavorite){
-      setFavoriteFilmsCount((prev) => prev - 1);}
-    else {setFavoriteFilmsCount((prev) => prev + 1);}
-    setIsFavorite(!isFavorite);
-    if(isFavoriteFilmsChanging) {
-      return;
-    }
-    setIsFavoriteChange(!isFavoriteChange);
+
   };
   return (
     <button
@@ -61,7 +58,10 @@ function MyList():JSX.Element{
         </use>
       </svg>
       <span>My list</span>
-      <span className="film-card__count">{favoriteFilmsCount}</span>
+      <span
+        className="film-card__count"
+      >{(authorizationStatus === AuthorizationStatus.Auth) ? favoriteFilms.length : '0'}
+      </span>
     </button>
   );
 }

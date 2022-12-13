@@ -9,6 +9,7 @@ import {saveToken, dropToken} from '../services/token';
 import { CommentData } from '../types/comment-data';
 import { getCommentsUrlByID, getFavoriteUrlByIDwithStatus, getFilmUrlByID, getSimilarFilmsById } from '../utils/geturl';
 import { FavoriteFilmStatus } from '../types/favorite-film-status';
+import { redirectToRoute } from './action';
 
 export const loadFilmsAction = createAsyncThunk<MovieCard[], undefined, {
   dispatch: AppDispatch;
@@ -102,6 +103,7 @@ export const postRewiewAction = createAsyncThunk<Comment[], CommentData, {
   'data/postRewiew',
   async ({comment, rating, id}, {dispatch, extra: api}) => {
     const {data} = await api.post<Comment[]>(getCommentsUrlByID(id), {comment, rating});
+    dispatch(redirectToRoute(getFilmUrlByID(id)));
     return data;
   },
 );

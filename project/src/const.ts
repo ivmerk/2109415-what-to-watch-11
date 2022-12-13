@@ -4,7 +4,7 @@ export const FILM_COUNT_PER_STEP = 8;
 
 export enum AppRoute {
   Main = '/',
-  Login = '/login',
+  SingIn = '/login',
   MyList = '/mylist',
   Player = '/player/:id',
   Film = '/films/:id',
@@ -43,8 +43,12 @@ export const FilmInfoTab = ['Overview', 'Details', 'Reviews'];
 
 export const FILMGENREBYDEFAULT = 'All genres';
 
+export const GENRES_CONT = 10;
+
 export enum NameSpace {
   Data = 'DATA',
   Film = 'FILM',
   User = 'USER'
 }
+
+export const Rating = { '10':'Awesome', '8':'Very good', '5':'Good', '3':'Normal', '0':'Bad'};

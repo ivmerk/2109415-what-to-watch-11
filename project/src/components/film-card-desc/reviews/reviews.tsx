@@ -1,4 +1,5 @@
 import { Comment } from '../../../types/moviescards';
+import { formatStringToDate } from '../../../utils/utils';
 
 type ReviewsTop = {
   comments: Comment[];
@@ -14,7 +15,7 @@ function Reviews({comments} :ReviewsTop): JSX.Element {
 
               <footer className="review__details">
                 <cite className="review__author">{comment.user.name}</cite>
-                <time className="review__date" dateTime={comment.date}>{comment.date}</time>
+                <time className="review__date" dateTime={formatStringToDate(comment.date)}>{formatStringToDate(comment.date)}</time>
               </footer>
             </blockquote>
 

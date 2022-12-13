@@ -2,7 +2,7 @@ import React, { MouseEvent, useCallback } from 'react';
 import { MovieCard } from '../../types/moviescards';
 import {changeGenre} from '../../store/film-process/film-process';
 import { useAppDispatch } from '../../hooks';
-import { FILMGENREBYDEFAULT } from '../../const';
+import { FILMGENREBYDEFAULT, GENRES_CONT } from '../../const';
 
 type GenresListProps = {
   films: MovieCard[];
@@ -12,7 +12,7 @@ function GenresList(props: GenresListProps) :JSX.Element {
   const {films} = props;
   const genres = new Set<string>().add(FILMGENREBYDEFAULT);
   films.map((film) => genres.add(film.genre));
-  const genresArr:string[] = [...genres];
+  const genresArr:string[] = [...genres].slice(0, GENRES_CONT);
   const dispatch = useAppDispatch();
 
   const onClickHandle = useCallback((evt:MouseEvent<HTMLElement>) => {
