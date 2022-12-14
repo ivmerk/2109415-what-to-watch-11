@@ -8,7 +8,6 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { AppRoute } from '../../const';
 
-
 function PlayerScreen():JSX.Element{
   const params = useParams();
   const filmId = params.id;
