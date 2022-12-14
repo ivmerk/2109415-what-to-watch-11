@@ -24,16 +24,26 @@ function MyList():JSX.Element{
   const changeStatus = (isFavorite ? 0 : 1);
 
   useEffect(() => {
+    let isMounted = true;
+
     dispatch(getFilmAction(filmId.toString()));
+
     if (authorizationStatus !== AuthorizationStatus.Auth){return;}
+
     dispatch(loadFavoriteFilmsAction());
     if(isFavoriteFilmsLoading){
       return;
     }
+
     if(!changedFilm || !film){
       return;
     }
-    isFavorite = changedFilm.isFavorite;
+    if(isMounted){
+      isFavorite = changedFilm.isFavorite;}
+
+    return () => {
+      isMounted = false;
+    };
   },[filmId, authorizationStatus, changedFilm]);
 
   const onClickHandle = () => {
