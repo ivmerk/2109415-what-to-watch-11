@@ -78,7 +78,7 @@ export const changeFavoriteFilmAction = createAsyncThunk<MovieCard | null, Favor
 }>(
   'data/changeFavoriteFilm',
   async ({filmId, status}, {extra: api}) => {
-    const {data} = await api.post<MovieCard | null>(getFavoriteUrlByIDwithStatus(filmId.toString(), status.toString()));
+    const {data} = await api.post<MovieCard | null>(getFavoriteUrlByIDwithStatus(filmId, status.toString()));
     return data;
   },
 );

@@ -7,11 +7,12 @@ import { changeFavoriteFilmAction, loadFavoriteFilmsAction, getFilmAction } from
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MyList():JSX.Element{
-  const params = useParams();
-  const getFilmId = () =>(params.id) ? params.id : '1';
-  const filmId = parseInt(getFilmId(), 10);
+  const {id = '1'} = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const isAuth = authStatus === AuthorizationStatus.Auth;
 
   const film = useAppSelector(getSelectedFilm);
   const favoriteFilms = useAppSelector(getFavoriteFilms);
@@ -26,9 +27,9 @@ function MyList():JSX.Element{
   useEffect(() => {
     let isMounted = true;
 
-    dispatch(getFilmAction(filmId.toString()));
+    dispatch(getFilmAction(id));
 
-    if (authorizationStatus !== AuthorizationStatus.Auth){return;}
+    if (!isAuth){return;}
 
     dispatch(loadFavoriteFilmsAction());
     if(isFavoriteFilmsLoading){
@@ -44,11 +45,11 @@ function MyList():JSX.Element{
     return () => {
       isMounted = false;
     };
-  },[filmId, authorizationStatus, changedFilm]);
+  },[id, authorizationStatus, changedFilm]);
 
   const onClickHandle = () => {
-    if(authorizationStatus !== AuthorizationStatus.Auth) {navigate(AppRoute.SingIn);}
-    dispatch(changeFavoriteFilmAction({filmId, status: changeStatus }));
+    if(!isAuth) {navigate(AppRoute.SingIn);}
+    dispatch(changeFavoriteFilmAction({filmId: id, status: changeStatus }));
 
   };
   return (
