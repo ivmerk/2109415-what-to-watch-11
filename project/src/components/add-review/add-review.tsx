@@ -4,9 +4,9 @@ import { getArray } from '../../utils/utils';
 import {CommentData} from '../../types/comment-data';
 import { useAppDispatch } from '../../hooks';
 import { postRewiewAction } from '../../store/api-actions';
+import { RATING_COUNT } from '../../const';
 
-const RATINGCOUNT = 10;
-const ratingStars:number[] = getArray(RATINGCOUNT);
+const ratingStars:number[] = getArray(RATING_COUNT);
 
 
 function AddReview():JSX.Element{

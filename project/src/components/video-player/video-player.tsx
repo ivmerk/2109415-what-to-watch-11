@@ -1,5 +1,5 @@
 import { useEffect, useRef} from 'react';
-// import { useState} from 'react';
+import { useState} from 'react';
 import { MovieCard } from '../../types/moviescards';
 
 type VideoPlayerProps = {
@@ -13,8 +13,7 @@ function VideoPlayer( props: VideoPlayerProps):JSX.Element{
   const {autoPlay, muted, film} = props;
   const {posterImage, videoLink} = film;
 
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [isLoading, setIsLoading] = useState(true);
   const isPlaying = autoPlay;
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -28,7 +27,7 @@ function VideoPlayer( props: VideoPlayerProps):JSX.Element{
 
     videoRef.current.addEventListener('loadeddata', () => {
       if (isVideoPlayerMounted){
-        // setIsLoading(false);
+        setIsLoading(false);
       }
     });
 
@@ -42,7 +41,7 @@ function VideoPlayer( props: VideoPlayerProps):JSX.Element{
     return () => {
       isVideoPlayerMounted = false;
     };
-  },[isPlaying]);
+  },[isLoading]);
 
   return(
     <video autoPlay={autoPlay}

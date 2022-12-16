@@ -1,5 +1,7 @@
-export const SAME_GENRE_FILMS_QT = 4;
 export const FILM_COUNT_PER_STEP = 8;
+export const RATING_COUNT = 10;
+export const MOUSE_OVER_CHECKING_TIMER = 100;
+export const CARD_VIDEO_DELAY_TIMER = 1000;
 
 
 export enum AppRoute {
@@ -31,16 +33,9 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-export enum FilmGenre {
-  AllGanres = 'ALL',
-  Comedy = 'COMEDY',
-  Triller = 'TRILLER',
-  Drama = 'Drama',
-}
-
 export const FilmInfoTab = ['Overview', 'Details', 'Reviews'];
 
-export const FILMGENREBYDEFAULT = 'All genres';
+export const FILM_GENRE_BY_DEFAULT = 'All genres';
 
 export const GENRES_CONT = 10;
 
@@ -50,4 +45,3 @@ export enum NameSpace {
   User = 'USER'
 }
 
-export const Rating = { '10':'Awesome', '8':'Very good', '5':'Good', '3':'Normal', '0':'Bad'};

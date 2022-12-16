@@ -30,8 +30,8 @@ function MyList():JSX.Element{
     dispatch(getFilmAction(id));
 
     if (!isAuth){return;}
-
-    dispatch(loadFavoriteFilmsAction());
+    if(isMounted){
+      dispatch(loadFavoriteFilmsAction());}
     if(isFavoriteFilmsLoading){
       return;
     }
@@ -39,8 +39,8 @@ function MyList():JSX.Element{
     if(!changedFilm || !film){
       return;
     }
-    if(isMounted){
-      isFavorite = changedFilm.isFavorite;}
+
+    isFavorite = changedFilm.isFavorite;
 
     return () => {
       isMounted = false;

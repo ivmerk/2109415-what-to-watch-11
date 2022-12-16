@@ -28,12 +28,15 @@ function FilmScreen():JSX.Element{
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
+    let isMounted = true;
 
-    if(filmId){
-      dispatch(getFilmAction(filmId));
-      dispatch(loadSameGenreFilmsAction(filmId));
-      dispatch(loadCommentsAction(filmId));
-    }
+    if (isMounted) {
+      if(filmId){
+        dispatch(getFilmAction(filmId));
+        dispatch(loadSameGenreFilmsAction(filmId));
+        dispatch(loadCommentsAction(filmId));
+      } }
+    return () => {isMounted = false;};
   }, [dispatch, filmId]);
 
   const checkSelectedFilm = (film: MovieCard|null) :MovieCard | undefined => {if(film) {

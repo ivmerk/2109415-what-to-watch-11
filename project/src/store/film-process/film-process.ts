@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FILMGENREBYDEFAULT, FILM_COUNT_PER_STEP, NameSpace } from '../../const';
+import { FILM_COUNT_PER_STEP, FILM_GENRE_BY_DEFAULT, NameSpace } from '../../const';
 import { FilmProcess } from '../../types/state';
 
 const initialState: FilmProcess = {
-  genre: FILMGENREBYDEFAULT,
+  genre: FILM_GENRE_BY_DEFAULT,
   renderingFilmsCount:FILM_COUNT_PER_STEP,
 };
 

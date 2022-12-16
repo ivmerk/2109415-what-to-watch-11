@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useState, ChangeEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import {logInAction} from '../../store/api-actions';
@@ -11,12 +11,16 @@ function SignInScreen():JSX.Element{
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
+  const [validPassword, setValidPassword] = useState(false);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
-    dispatch(logInAction(authData));
-    navigate(AppRoute.Main);
+    if (validPassword) {
+      dispatch(logInAction(authData));
+      navigate(AppRoute.Main);
+    }
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -27,6 +31,13 @@ function SignInScreen():JSX.Element{
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+    }
+  };
+
+  const onKeyDownCaptureHandle = (evt: ChangeEvent<HTMLInputElement>) =>{
+    evt.preventDefault();
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      setValidPassword(/[0-9]/.test(passwordRef.current.value) && /[A-Za-z]/.test(passwordRef.current.value));
     }
   };
 
@@ -64,7 +75,9 @@ function SignInScreen():JSX.Element{
                 ref={passwordRef}
                 className="sign-in__input"
                 type="password"
+                onChange={onKeyDownCaptureHandle}
                 placeholder="Password"
+                style={(validPassword) ? {borderColor:'green'} : {borderColor:'red'}}
                 name="user-password"
                 id="user-password"
               />

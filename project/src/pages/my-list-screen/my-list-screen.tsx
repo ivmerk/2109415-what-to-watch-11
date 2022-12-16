@@ -13,8 +13,13 @@ function MyListScreen(): JSX.Element{
 
   const films = useAppSelector(getFavoriteFilms);
   const isFavoriteFilmsLoading = useAppSelector(getIsFavoriteFilmsLoading);
-  useEffect(() => {
-    dispatch(loadFavoriteFilmsAction());},[dispatch]);
+  useEffect(()=>{
+    let isMounted = true;
+
+    if (isMounted) {
+      dispatch(loadFavoriteFilmsAction());}
+    return ()=> {isMounted = false;};
+  },[dispatch]);
   if(isFavoriteFilmsLoading){
     <LoadingScreen/>;
   }

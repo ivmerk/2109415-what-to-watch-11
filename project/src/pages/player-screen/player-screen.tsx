@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { SyntheticEvent, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,6 +15,8 @@ function PlayerScreen():JSX.Element{
   const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [timeProgress, setTimeProgress] = useState(0);
   const muted = false;
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -44,17 +46,33 @@ function PlayerScreen():JSX.Element{
     };
   },[isPlaying]);
 
+  const handleProgress = (e: SyntheticEvent<HTMLVideoElement>) => {
+    if (isNaN(e.currentTarget.duration))
+    {return;}
+    setProgress((e.currentTarget.currentTime / e.currentTarget.duration) * 100);
+    setTimeProgress(e.currentTarget.currentTime);
+  };
   const onPlayClickHandle = () => {
     setIsPlaying(!isPlaying);
   };
-  const onFullScreenClickHandle = () => void 0;
+  const onFullScreenClickHandle = () => {
+    const el = document.getElementById('full-screenVideo');
+    if (!el)
+    {return;}
+    if (el.requestFullscreen) {
+      el.requestFullscreen();
+    }
+  };
 
   const onExitClickHandle = () => {
     navigate(AppRoute.Main);
   };
+
   if(!filmId) { return <NotFoundPage/>;}
+
   const film = films[Number(filmId) - 1];
   const {videoLink, name, posterImage} = film;
+
   if(isLoading) {
     <LoadingScreen/>;
   }
@@ -65,8 +83,10 @@ function PlayerScreen():JSX.Element{
       </Helmet>
       <video
         autoPlay = {isPlaying}
+        onProgress={handleProgress}
         className="player__video"
         muted={muted}
+        id="full-screenVideo"
         poster={posterImage}
         ref={videoRef}
       >
@@ -84,10 +104,14 @@ function PlayerScreen():JSX.Element{
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler">Toggler</div>
+            <progress className="player__progress" value={progress} max="100"></progress>
+            <div className="player__toggler" style={{left: `${progress}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div
+            className="player__time-value"
+          >{(Math.floor(timeProgress / 60)) ? `${Math.floor(timeProgress / 60)} :` : '00:'}
+            {`${Math.floor(timeProgress % 60)}`}
+          </div>
         </div>
 
         <div className="player__controls-row">
