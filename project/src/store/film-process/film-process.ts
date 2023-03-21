@@ -14,7 +14,7 @@ export const filmProcess = createSlice({
     changeGenre: (state, actions: PayloadAction<string>) =>{
       state.genre = actions.payload;
     },
-    increaseRenderingFilmsCount: (state, actions: PayloadAction<number>) => {
+    increaseRenderingFilmsCount: (state, _actions: PayloadAction<number>) => {
       state.renderingFilmsCount += FILM_COUNT_PER_STEP;
     },
   }

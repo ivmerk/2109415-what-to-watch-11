@@ -83,7 +83,7 @@ function PlayerScreen():JSX.Element{
       </Helmet>
       <video
         autoPlay = {isPlaying}
-        onProgress={handleProgress}
+        onTimeUpdate={handleProgress}
         className="player__video"
         muted={muted}
         id="full-screenVideo"
